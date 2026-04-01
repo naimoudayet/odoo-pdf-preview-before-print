@@ -1,0 +1,73 @@
+<section style="max-width: 896px; margin: 0 auto; font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #333; line-height: 1.6;">
+
+    <!-- Hero -->
+    <div style="background: linear-gradient(135deg, #714B67, #9B6A8F); color: white; padding: 40px; border-radius: 8px; text-align: center; margin-bottom: 32px;">
+        <h1 style="margin: 0 0 8px; font-size: 2em; font-weight: 700;">PDF Preview Before Print</h1>
+        <p style="margin: 0; font-size: 1.15em; opacity: 0.9;">Preview PDF reports before printing or downloading &mdash; backend &amp; portal</p>
+    </div>
+
+    <!-- Problem -->
+    <div style="margin-bottom: 32px;">
+        <h2 style="color: #714B67; border-bottom: 2px solid #714B67; padding-bottom: 8px;">The Problem</h2>
+        <p>Every time you click <strong>Print</strong> or <strong>Download</strong> in Odoo, the PDF is silently pushed to your printer or downloads folder. There is no way to glance at it first. Wrong template? Blank page? Missing data? You only find out after wasting paper or hunting through your downloads. Portal customers face the same issue &mdash; they must download an invoice just to see if it is the right one.</p>
+    </div>
+
+    <!-- Features -->
+    <div style="margin-bottom: 32px;">
+        <h2 style="color: #714B67; border-bottom: 2px solid #714B67; padding-bottom: 8px;">Features</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+            <div style="padding: 16px; background: #f8f5f7; border-radius: 8px;">
+                <h4 style="margin: 0 0 4px; color: #714B67;"><i class="fa fa-expand" style="margin-right: 6px;"></i> Full-Screen Preview</h4>
+                <p style="margin: 0; font-size: 0.9em;">A clean, full-screen OWL dialog shows the PDF before any action is taken. Scroll through multi-page documents effortlessly.</p>
+            </div>
+            <div style="padding: 16px; background: #f8f5f7; border-radius: 8px;">
+                <h4 style="margin: 0 0 4px; color: #714B67;"><i class="fa fa-print" style="margin-right: 6px;"></i> Print from Preview</h4>
+                <p style="margin: 0; font-size: 0.9em;">One click (or press <strong>P</strong>) to send the previewed document directly to the printer &mdash; no extra steps.</p>
+            </div>
+            <div style="padding: 16px; background: #f8f5f7; border-radius: 8px;">
+                <h4 style="margin: 0 0 4px; color: #714B67;"><i class="fa fa-download" style="margin-right: 6px;"></i> Download from Preview</h4>
+                <p style="margin: 0; font-size: 0.9em;">Press <strong>D</strong> or click Download to save the PDF after you have confirmed it looks correct.</p>
+            </div>
+            <div style="padding: 16px; background: #f8f5f7; border-radius: 8px;">
+                <h4 style="margin: 0 0 4px; color: #714B67;"><i class="fa fa-keyboard-o" style="margin-right: 6px;"></i> Keyboard Shortcuts</h4>
+                <p style="margin: 0; font-size: 0.9em;"><strong>P</strong> &rarr; Print &bull; <strong>D</strong> &rarr; Download &bull; <strong>Esc</strong> &rarr; Close. No mouse required.</p>
+            </div>
+            <div style="padding: 16px; background: #f8f5f7; border-radius: 8px;">
+                <h4 style="margin: 0 0 4px; color: #714B67;"><i class="fa fa-globe" style="margin-right: 6px;"></i> Portal Support</h4>
+                <p style="margin: 0; font-size: 0.9em;">External customers see a Preview button next to every invoice, quotation, and purchase order in their portal.</p>
+            </div>
+            <div style="padding: 16px; background: #f8f5f7; border-radius: 8px;">
+                <h4 style="margin: 0 0 4px; color: #714B67;"><i class="fa fa-magic" style="margin-right: 6px;"></i> Zero Configuration</h4>
+                <p style="margin: 0; font-size: 0.9em;">Install the module and it works immediately. No settings page, no configuration wizard, no per-user setup.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- How It Works -->
+    <div style="margin-bottom: 32px;">
+        <h2 style="color: #714B67; border-bottom: 2px solid #714B67; padding-bottom: 8px;">How It Works</h2>
+        <ol style="padding-left: 20px;">
+            <li style="margin-bottom: 8px;"><strong>Backend:</strong> The module patches the default report download action. Instead of downloading the PDF immediately, it opens an OWL dialog with an embedded PDF viewer. Users then choose to Print, Download, or Close.</li>
+            <li style="margin-bottom: 8px;"><strong>Portal:</strong> A lightweight JavaScript module adds a Preview button next to every PDF download link on portal pages. Clicking it opens the same full-screen viewer.</li>
+        </ol>
+    </div>
+
+    <!-- Technical Info -->
+    <div style="margin-bottom: 32px; padding: 20px; background: #f0f0f0; border-radius: 8px;">
+        <h3 style="margin: 0 0 12px; color: #555;">Technical Details</h3>
+        <table style="width: 100%; font-size: 0.9em;">
+            <tr><td style="padding: 4px 8px; font-weight: 600;">Odoo Version</td><td>19.0</td></tr>
+            <tr><td style="padding: 4px 8px; font-weight: 600;">Dependencies</td><td>web, portal</td></tr>
+            <tr><td style="padding: 4px 8px; font-weight: 600;">License</td><td>OPL-1</td></tr>
+            <tr><td style="padding: 4px 8px; font-weight: 600;">Type</td><td>Frontend (OWL) + Controller</td></tr>
+            <tr><td style="padding: 4px 8px; font-weight: 600;">Category</td><td>Tools</td></tr>
+            <tr><td style="padding: 4px 8px; font-weight: 600;">Configuration</td><td>None required</td></tr>
+        </table>
+    </div>
+
+    <!-- Footer -->
+    <div style="text-align: center; padding: 20px; color: #888; font-size: 0.85em;">
+        <p>Developed by <strong>Naim OUDAYET</strong> &mdash; <a href="https://www.oudayet.com" style="color: #714B67;">oudayet.com</a></p>
+    </div>
+
+</section>
