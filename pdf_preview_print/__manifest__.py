@@ -19,7 +19,7 @@ before the document is printed or downloaded.
 - Works with single records and batch printing
 - Zero configuration — install and it just works
 """,
-    "version": "19.0.1.0.0",
+    "version": "17.0.1.0.0",
     "category": "Tools",
     "website": "https://www.oudayet.com",
     "author": "Naim OUDAYET",
