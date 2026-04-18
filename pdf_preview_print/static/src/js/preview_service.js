@@ -5,16 +5,21 @@
 /**
  * PDF Preview Report Handler
  *
- * Registers a handler in Odoo 19's "ir.actions.report handlers" registry
+ * Registers a handler in Odoo 16's "ir.actions.report handlers" registry
  * to intercept qweb-pdf report actions. Instead of the browser downloading
  * the file immediately, a full-screen preview dialog is shown first.
  *
  * The user can then Print, Download, or Close from the dialog.
+ *
+ * Note: Odoo 16 does not expose a `downloadReport` helper the way 17+ does,
+ * so the download is performed directly against `/report/download` using the
+ * shared `download` network utility (same approach as the core action
+ * service's internal `_triggerDownload`).
  */
 
 import { registry } from "@web/core/registry";
+import { download } from "@web/core/network/download";
 import { PreviewDialog } from "./preview_dialog";
-import { downloadReport } from "@web/webclient/actions/reports/utils";
 
 function pdfPreviewHandler(action, options, env) {
     if (action.report_type && action.report_type !== "qweb-pdf") {
@@ -31,9 +36,20 @@ function pdfPreviewHandler(action, options, env) {
     env.services.dialog.add(PreviewDialog, {
         reportUrl,
         reportName: action.name || action.display_name || "",
-        onDownload() {
-            const ctx = { ...env.services.user.context, ...action.context };
-            downloadReport(env.services.rpc, action, "pdf", ctx);
+        async onDownload() {
+            const context = { ...env.services.user.context, ...action.context };
+            env.services.ui.block();
+            try {
+                await download({
+                    url: "/report/download",
+                    data: {
+                        data: JSON.stringify([reportUrl, "qweb-pdf"]),
+                        context: JSON.stringify(context),
+                    },
+                });
+            } finally {
+                env.services.ui.unblock();
+            }
         },
     });
 
