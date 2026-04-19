@@ -37,6 +37,9 @@ before the document is printed or downloaded.
             "pdf_preview_print/static/src/js/preview_dialog.js",
             "pdf_preview_print/static/src/js/preview_service.js",
         ],
+            "web.assets_unit_tests": [
+            "pdf_preview_print/static/tests/**/*.test.js",
+        ],
     },
     "images": [
         "static/description/banner.png",
