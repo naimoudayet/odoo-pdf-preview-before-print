@@ -28,7 +28,7 @@ import { registry } from "@web/core/registry";
 import { download } from "@web/core/network/download";
 import { PreviewDialog } from "./preview_dialog";
 
-function getReportUrl(action, type, userContext) {
+export function getReportUrl(action, type, userContext) {
     let url = `/report/${type}/${action.report_name}`;
     const actionContext = action.context || {};
     if (action.data && JSON.stringify(action.data) !== "{}") {
@@ -41,7 +41,7 @@ function getReportUrl(action, type, userContext) {
     return url;
 }
 
-function pdfPreviewHandler(action, options, env) {
+export function pdfPreviewHandler(action, options, env) {
     if (action.report_type && action.report_type !== "qweb-pdf") {
         return false;
     }
