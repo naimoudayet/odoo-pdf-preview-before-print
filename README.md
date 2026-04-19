@@ -1,4 +1,4 @@
-# PDF Preview Before Print — Odoo 19
+# PDF Preview Before Print — Odoo 17
 
 Preview any PDF report in a full-screen dialog before printing or downloading. Works with all standard Odoo reports — single records and batch printing. Zero configuration.
 
@@ -31,7 +31,7 @@ This module intercepts the PDF download action and opens a clean preview dialog 
 
 | | |
 |---|---|
-| **Odoo Version** | 19.0 |
+| **Odoo Version** | 17.0 |
 | **Dependencies** | `web` |
 | **License** | LGPL-3 |
 | **Type** | Pure Frontend (OWL) |
@@ -40,7 +40,7 @@ This module intercepts the PDF download action and opens a clean preview dialog 
 
 ## How It Works
 
-The module registers a handler in Odoo 19's `ir.actions.report handlers` registry. When any `qweb-pdf` report action is triggered, the handler intercepts it and opens a `PreviewDialog` component with the PDF rendered in an iframe. The user then chooses to print, download, or close.
+The module registers a handler in Odoo 17's `ir.actions.report handlers` registry. When any `qweb-pdf` report action is triggered, the handler intercepts it and opens a `PreviewDialog` component with the PDF rendered in an iframe. The user then chooses to print, download, or close.
 
 ### Files
 
@@ -64,8 +64,8 @@ pdf_preview_print/
 
 ## Compatibility
 
-- Odoo 19.0 Community
-- Odoo 19.0 Enterprise
+- Odoo 17.0 Community
+- Odoo 17.0 Enterprise
 - Works with all standard and custom QWeb PDF reports
 
 ## Author
