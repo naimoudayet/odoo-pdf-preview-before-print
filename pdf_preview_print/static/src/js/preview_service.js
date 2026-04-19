@@ -16,7 +16,7 @@ import { registry } from "@web/core/registry";
 import { PreviewDialog } from "./preview_dialog";
 import { downloadReport } from "@web/webclient/actions/reports/utils";
 
-function pdfPreviewHandler(action, options, env) {
+export function pdfPreviewHandler(action, options, env) {
     if (action.report_type && action.report_type !== "qweb-pdf") {
         return false;
     }
@@ -43,7 +43,7 @@ function pdfPreviewHandler(action, options, env) {
 /**
  * Extract record IDs from the various places Odoo puts them.
  */
-function getActiveIds(action) {
+export function getActiveIds(action) {
     if (action.context?.active_ids?.length) {
         return action.context.active_ids;
     }

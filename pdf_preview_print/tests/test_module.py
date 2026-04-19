@@ -58,16 +58,21 @@ class TestPdfPreviewPrint(TransactionCase):
         )
 
     def test_03_asset_files_exist(self):
+        import glob as _glob
         addons_root = os.path.dirname(self.module_path)
-        missing = [
-            p
-            for p in self._asset_paths()
-            if not os.path.isfile(os.path.join(addons_root, p))
-        ]
+        missing = []
+        for rel in self._asset_paths():
+            full = os.path.join(addons_root, rel)
+            if any(c in rel for c in "*?[]"):
+                if not _glob.glob(full, recursive=True):
+                    missing.append(rel)
+            elif not os.path.isfile(full):
+                missing.append(rel)
         self.assertFalse(
             missing,
             "manifest references files that do not exist: %s" % missing,
         )
+
 
     def test_04_report_handler_asset_registered(self):
         self.assertIn(
