@@ -28,6 +28,24 @@ import { registry } from "@web/core/registry";
 import { download } from "@web/core/network/download";
 import { PreviewDialog } from "./preview_dialog";
 
+
+export function getActiveIds(action) {
+    const ctx = action.context || {};
+    if (ctx.active_ids && ctx.active_ids.length) {
+        return ctx.active_ids;
+    }
+    if (ctx.active_id) {
+        return [ctx.active_id];
+    }
+    if (action.data && action.data.ids && action.data.ids.length) {
+        return action.data.ids;
+    }
+    if (action.data && action.data.id) {
+        return [action.data.id];
+    }
+    return [];
+}
+
 export function getReportUrl(action, type, userContext) {
     let url = `/report/${type}/${action.report_name}`;
     const actionContext = action.context || {};
