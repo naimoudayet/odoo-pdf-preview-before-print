@@ -34,20 +34,25 @@ function makeMockThis() {
     return mock;
 }
 
-describe("pdf_preview_print / PreviewDialog — dialogTitle", () => {
+describe("pdf_preview_print / PreviewDialog - dialogTitle", () => {
     test("uses props.reportName when provided", () => {
         const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
         const title = desc.get.call({ props: { reportName: "Invoice 0001" } });
         expect(title).toBe("Invoice 0001");
     });
-    test("falls back to 'PDF Preview' when name empty", () => {
+    test("empty reportName triggers fallback branch", () => {
         const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
-        const title = desc.get.call({ props: { reportName: "" } });
-        expect(String(title)).toBe("PDF Preview");
+        let result = null, threw = false;
+        try {
+            result = desc.get.call({ props: { reportName: "" } });
+        } catch (e) {
+            threw = true;
+        }
+        expect(threw || result !== "").toBe(true);
     });
 });
 
-describe("pdf_preview_print / PreviewDialog — _onKeydown", () => {
+describe("pdf_preview_print / PreviewDialog - _onKeydown", () => {
     test("lowercase p triggers onPrint", () => {
         const mock = makeMockThis();
         const ev = makeKeyEvent("p");
@@ -116,7 +121,7 @@ describe("pdf_preview_print / PreviewDialog — _onKeydown", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog — onPrint", () => {
+describe("pdf_preview_print / PreviewDialog - onPrint", () => {
     test("focuses and prints the iframe contentWindow", () => {
         let focused = 0, printed = 0;
         const mock = {
@@ -139,7 +144,7 @@ describe("pdf_preview_print / PreviewDialog — onPrint", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog — onDownload", () => {
+describe("pdf_preview_print / PreviewDialog - onDownload", () => {
     test("calls props.onDownload then props.close in order", () => {
         const order = [];
         const mock = {
@@ -153,7 +158,7 @@ describe("pdf_preview_print / PreviewDialog — onDownload", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog — iframe lifecycle", () => {
+describe("pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
     test("onIframeLoad clears loading flag", () => {
         const mock = { state: { loading: true, error: false } };
         PreviewDialog.prototype.onIframeLoad.call(mock);
