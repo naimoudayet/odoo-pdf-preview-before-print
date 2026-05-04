@@ -1,7 +1,7 @@
 // Copyright 2026 Naim OUDAYET
 // License LGPL-3
 import { describe, expect, test } from "@odoo/hoot";
-import { PreviewDialog } from "@pdf_preview_print/js/preview_dialog";
+import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
 function makeKeyEvent(key, opts) {
     opts = opts || {};
@@ -34,7 +34,7 @@ function makeMockThis() {
     return mock;
 }
 
-describe("pdf_preview_print / PreviewDialog - dialogTitle", () => {
+describe("no_pdf_preview_print / PreviewDialog - dialogTitle", () => {
     test("uses props.reportName when provided", () => {
         const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
         const title = desc.get.call({ props: { reportName: "Invoice 0001" } });
@@ -52,7 +52,7 @@ describe("pdf_preview_print / PreviewDialog - dialogTitle", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog - _onKeydown", () => {
+describe("no_pdf_preview_print / PreviewDialog - _onKeydown", () => {
     test("lowercase p triggers onPrint", () => {
         const mock = makeMockThis();
         const ev = makeKeyEvent("p");
@@ -121,7 +121,7 @@ describe("pdf_preview_print / PreviewDialog - _onKeydown", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog - onPrint", () => {
+describe("no_pdf_preview_print / PreviewDialog - onPrint", () => {
     test("focuses and prints the iframe contentWindow", () => {
         let focused = 0, printed = 0;
         const mock = {
@@ -144,7 +144,7 @@ describe("pdf_preview_print / PreviewDialog - onPrint", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog - onDownload", () => {
+describe("no_pdf_preview_print / PreviewDialog - onDownload", () => {
     test("calls props.onDownload then props.close in order", () => {
         const order = [];
         const mock = {
@@ -158,7 +158,7 @@ describe("pdf_preview_print / PreviewDialog - onDownload", () => {
     });
 });
 
-describe("pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
+describe("no_pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
     test("onIframeLoad clears loading flag", () => {
         const mock = { state: { loading: true, error: false } };
         PreviewDialog.prototype.onIframeLoad.call(mock);
