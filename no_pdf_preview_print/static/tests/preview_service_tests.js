@@ -4,9 +4,9 @@
 import {
     getActiveIds,
     pdfPreviewHandler,
-} from "@pdf_preview_print/js/preview_service";
+} from "@no_pdf_preview_print/js/preview_service";
 
-QUnit.module("pdf_preview_print / preview_service", {}, function () {
+QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
     // -------------------------------------------------------------------
     QUnit.module("getActiveIds");
 

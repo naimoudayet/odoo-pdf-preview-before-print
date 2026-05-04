@@ -1,7 +1,7 @@
 /** @odoo-module **/
 // Copyright 2026 Naim OUDAYET
 // License LGPL-3
-import { PreviewDialog } from "@pdf_preview_print/js/preview_dialog";
+import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
 function makeKeyEvent(key, opts) {
     opts = opts || {};
@@ -34,7 +34,7 @@ function makeMockThis() {
     return mock;
 }
 
-QUnit.module("pdf_preview_print / PreviewDialog", {}, function () {
+QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
 
     QUnit.module("dialogTitle getter");
     QUnit.test("uses props.reportName when provided", (assert) => {

@@ -7,7 +7,7 @@ import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 
 export class PreviewDialog extends Component {
-    static template = "pdf_preview_print.PreviewDialog";
+    static template = "no_pdf_preview_print.PreviewDialog";
     static components = { Dialog };
     static props = {
         reportUrl: { type: String },
