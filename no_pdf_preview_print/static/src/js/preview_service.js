@@ -99,4 +99,4 @@ export function pdfPreviewHandler(action, options, env) {
 
 registry
     .category("ir.actions.report handlers")
-    .add("pdf_preview_print", pdfPreviewHandler);
+    .add("no_pdf_preview_print", pdfPreviewHandler);
