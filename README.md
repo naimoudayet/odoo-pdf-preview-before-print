@@ -2,65 +2,45 @@
 
 Preview any PDF report in a full-screen dialog before printing or downloading. Works with all standard Odoo reports — single records and batch printing. Zero configuration.
 
-## The Problem
-
-In standard Odoo, clicking **Print** immediately downloads the PDF. There is no way to review the document first. Wrong template? Blank page? Missing data? You only find out after wasting paper or digging through your downloads folder.
-
-## The Solution
-
-This module intercepts the PDF download action and opens a clean preview dialog instead. From there you can **Print**, **Download**, or **Close** — with full keyboard support.
-
 ## Features
 
-- **Full-screen preview dialog** — OWL-based, no pop-ups or new tabs
-- **Print from preview** — send directly to printer after reviewing
-- **Download from preview** — save the PDF only when you're satisfied
-- **Keyboard shortcuts** — `P` Print, `D` Download, `Esc` Close
-- **Single + batch** — works from both form view and list view (multi-select)
-- **Zero configuration** — install and it works on all PDF reports
-- **Lightweight** — pure frontend, no Python models, no database changes
-
-## Installation
-
-1. Copy the `pdf_preview_print` folder to your Odoo addons directory
-2. Update the apps list: **Apps > Update Apps List**
-3. Search for **"PDF Preview Before Print"** and install
-4. Done — all PDF reports now show a preview first
-
-## Technical Details
-
-| | |
-|---|---|
-| **Odoo Version** | 18.0 |
-| **Dependencies** | `web` |
-| **License** | LGPL-3 |
-| **Type** | Pure Frontend (OWL) |
-| **Python required** | No |
-| **Configuration** | None |
+- **Full-Screen Preview Dialog** -- OWL-based, in-app, no pop-ups or new tabs.
+- **Print from Preview** -- send directly to the printer after reviewing.
+- **Download from Preview** -- save the PDF only when you're satisfied.
+- **Keyboard Shortcuts** -- `P` Print, `D` Download, `Esc` Close.
+- **Single + Batch Reports** -- works from form view and list view multi-select.
+- **Zero Configuration** -- install and every QWeb PDF report is intercepted.
+- **Lightweight** -- pure frontend, no Python models, no database changes.
 
 ## How It Works
 
-The module registers a handler in Odoo 18's `ir.actions.report handlers` registry. When any `qweb-pdf` report action is triggered, the handler intercepts it and opens a `PreviewDialog` component with the PDF rendered in an iframe. The user then chooses to print, download, or close.
+1. The user clicks **Print** on any record (or batch via list multi-select).
+2. The module's handler (registered in Odoo 18's `ir.actions.report handlers` registry) intercepts the action.
+3. A `PreviewDialog` OWL component renders the PDF inside an iframe.
+4. The user chooses **Print**, **Download**, or **Close** — with full keyboard support.
 
-### Files
+The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, text) fall through unchanged.
 
-```
-pdf_preview_print/
-├── __init__.py
-├── __manifest__.py
-└── static/
-    ├── description/
-    │   ├── icon.png
-    │   └── index.html
-    └── src/
-        ├── js/
-        │   ├── preview_dialog.js    # OWL dialog component
-        │   └── preview_service.js   # Report handler registration
-        ├── scss/
-        │   └── preview.scss         # Dialog styles
-        └── xml/
-            └── preview_dialog.xml   # QWeb template
-```
+## Technical Details
+
+| Item                 | Value                                |
+|----------------------|--------------------------------------|
+| Odoo Version         | 18.0                                 |
+| License              | LGPL-3                               |
+| Dependencies         | `web`                                |
+| Python Dependencies  | None                                 |
+| Type                 | Pure Frontend (OWL)                  |
+| Configuration        | None (zero-config)                   |
+
+## Installation
+
+1. Place the `no_pdf_preview_print` folder in your Odoo addons directory.
+2. Restart the Odoo server (or run with `-u no_pdf_preview_print` on first install).
+3. Go to **Apps**, remove the *Apps* filter, search for **"PDF Preview Before Print"**, and click **Install**.
+
+## Configuration
+
+None. Once installed, every QWeb PDF report shows the preview dialog instead of an immediate download.
 
 ## Compatibility
 
@@ -68,9 +48,15 @@ pdf_preview_print/
 - Odoo 18.0 Enterprise
 - Works with all standard and custom QWeb PDF reports
 
+## Development
+
+For the development stack (Docker compose with Postgres + Odoo + headless Chrome for tests), see the [`18.0.dev`](https://github.com/naimoudayet/odoo-pdf-preview-before-print/tree/18.0.dev) branch.
+
 ## Author
 
 **Naim OUDAYET**
+Odoo developer based in Tunisia.
+
 - Website: [oudayet.com](https://www.oudayet.com)
 - Email: contact@oudayet.com
 - GitHub: [@naimoudayet](https://github.com/naimoudayet)
