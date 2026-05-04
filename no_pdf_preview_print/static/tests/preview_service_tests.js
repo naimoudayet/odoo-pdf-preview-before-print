@@ -5,9 +5,9 @@ import {
     getActiveIds,
     pdfPreviewHandler,
     getReportUrl,
-} from "@pdf_preview_print/js/preview_service";
+} from "@no_pdf_preview_print/js/preview_service";
 
-QUnit.module("pdf_preview_print / preview_service", {}, function () {
+QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
     // -------------------------------------------------------------------
     QUnit.module("getActiveIds");
 
@@ -235,7 +235,7 @@ QUnit.module("pdf_preview_print / preview_service", {}, function () {
 });
 
 // -------------------------------------------------------------------
-QUnit.module("pdf_preview_print / getReportUrl (v16)", {}, function () {
+QUnit.module("no_pdf_preview_print / getReportUrl (v16)", {}, function () {
     QUnit.test("simple path when action.data is empty ({})", (assert) => {
         const url = getReportUrl(
             {
