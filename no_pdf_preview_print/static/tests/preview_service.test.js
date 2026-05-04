@@ -4,9 +4,9 @@ import { describe, expect, test } from "@odoo/hoot";
 import {
     getActiveIds,
     pdfPreviewHandler,
-} from "@pdf_preview_print/js/preview_service";
+} from "@no_pdf_preview_print/js/preview_service";
 
-describe("pdf_preview_print / getActiveIds", () => {
+describe("no_pdf_preview_print / getActiveIds", () => {
     test("returns context.active_ids array", () => {
         expect(getActiveIds({ context: { active_ids: [1, 2, 3] } })).toEqual([1, 2, 3]);
     });
@@ -52,7 +52,7 @@ describe("pdf_preview_print / getActiveIds", () => {
     });
 });
 
-describe("pdf_preview_print / pdfPreviewHandler", () => {
+describe("no_pdf_preview_print / pdfPreviewHandler", () => {
     function makeEnv() {
         const added = [];
         return {
