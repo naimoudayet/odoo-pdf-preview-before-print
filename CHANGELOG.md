@@ -5,6 +5,18 @@ All notable changes to **PDF Preview Before Print** for Odoo 19.0 are documented
 This file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>` scheme.
 
+## [19.0.1.2.0] - 2026-05-12
+
+### Added
+- **Chinese (Simplified) translation** (`zh_CN`) - 8 languages total. Translations cover all 10 user-facing strings (manifest, JS, QWeb).
+- New language card with CN flag in the "Available in 8 Languages" section of the App Store description.
+- `zh_CN` row in the Languages table in README.
+- `cn.svg` added to the shared flag library (`N:\\Apps\\_shared\\flags\\`).
+
+### Changed
+- Hero "7 Languages" badge updated to "8 Languages".
+- Module version bumped from `19.0.1.1.0` to `19.0.1.2.0` (semver minor for new feature).
+
 ## [19.0.1.1.0] - 2026-05-12
 
 ### Added
