@@ -7,6 +7,7 @@
         <span style="display: inline-block; background-color: #5A3A52; border: 1px solid #8A6A80; border-radius: 20px; padding: 5px 16px; font-size: 14px; color: #ffffff; margin: 0 4px;">Odoo 19</span>
         <span style="display: inline-block; background-color: #00A09D; border-radius: 20px; padding: 5px 16px; font-size: 14px; color: #ffffff; margin: 0 4px;">FREE</span>
         <span style="display: inline-block; background-color: #FF7F4F; border-radius: 20px; padding: 5px 16px; font-size: 14px; color: #ffffff; margin: 0 4px;">Zero Config</span>
+        <span style="display: inline-block; background-color: #2E86AB; border-radius: 20px; padding: 5px 16px; font-size: 14px; color: #ffffff; margin: 0 4px;">7 Languages</span>
     </div>
 
     <!-- PROBLEM / SOLUTION -->
@@ -203,6 +204,59 @@
         </div>
     </div>
 
+    <!-- LANGUAGES -->
+    <div class="container py-5">
+        <h2 style="color: #714B67; font-size: 28px; font-weight: 700; margin-bottom: 8px; text-align: center;">Available in 7 Languages</h2>
+        <p style="color: #475569; font-size: 15px; margin-bottom: 32px; text-align: center;">The preview dialog speaks your team's language. Each user sees buttons and prompts in their own Odoo language setting - no extra setup.</p>
+
+        <div class="row">
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">English</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">en_US</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">Fran&ccedil;ais</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">fr</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">Espa&ntilde;ol</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">es</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">Deutsch</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">de</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">Nederlands</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">nl</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">Portugu&ecirc;s (BR)</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">pt_BR</p>
+                </div>
+            </div>
+            <div class="col-md-3 col-sm-4 col-6 mb-3">
+                <div style="background-color: #ffffff; border: 1px solid #E8DDE5; border-radius: 8px; padding: 14px; text-align: center;">
+                    <strong style="color: #714B67;">Italiano</strong>
+                    <p style="font-size: 12px; color: #94A3B8; margin: 4px 0 0;">it</p>
+                </div>
+            </div>
+        </div>
+
+        <p style="color: #94A3B8; font-size: 13px; text-align: center; margin-top: 8px; max-width: 640px; margin-left: auto; margin-right: auto;">Standard Odoo gettext PO files under <code>i18n/</code>. Regional variants (<code>fr_BE</code>, <code>nl_BE</code>) inherit from the base language. Need another language? Drop a <code>.po</code> file in <code>i18n/</code> and reinstall.</p>
+    </div>
+
     <!-- LIMITATIONS / HONEST SCOPE -->
     <div class="container py-5">
         <h2 style="color: #714B67; font-size: 28px; font-weight: 700; margin-bottom: 16px; text-align: center;">What This Module Doesn't Do</h2>
@@ -325,9 +379,13 @@
                     <div class="col-md-5 col-12" style="text-align: left;"><strong style="color: #714B67;">Mechanism</strong></div>
                     <div class="col-md-7 col-12" style="text-align: left;">OWL Dialog + handler in <code>ir.actions.report handlers</code> registry</div>
                 </div>
-                <div class="row" style="padding: 10px 0;">
+                <div class="row" style="border-bottom: 1px solid #E8DDE5; padding: 10px 0;">
                     <div class="col-md-5 col-12" style="text-align: left;"><strong style="color: #714B67;">Test coverage</strong></div>
                     <div class="col-md-7 col-12" style="text-align: left;">Hoot/QUnit JS suite (dialog + service) + HttpCase wrapper</div>
+                </div>
+                <div class="row" style="padding: 10px 0;">
+                    <div class="col-md-5 col-12" style="text-align: left;"><strong style="color: #714B67;">Languages</strong></div>
+                    <div class="col-md-7 col-12" style="text-align: left;">EN, FR, ES, DE, NL, PT-BR, IT (gettext PO)</div>
                 </div>
             </div>
         </div>
