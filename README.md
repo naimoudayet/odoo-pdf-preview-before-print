@@ -11,6 +11,7 @@ Preview any PDF report in a full-screen dialog before printing or downloading. W
 - **Single + Batch Reports** -- works from form view and list view multi-select.
 - **Zero Configuration** -- install and every QWeb PDF report is intercepted.
 - **Lightweight** -- pure frontend, no Python models, no database changes.
+- **Translated into 7 Languages** -- English, French, Spanish, German, Dutch, Portuguese (BR), Italian. Each user sees the dialog in their own Odoo language.
 
 ## How It Works
 
@@ -31,6 +32,7 @@ The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, t
 | Python Dependencies  | None                                 |
 | Type                 | Pure Frontend (OWL)                  |
 | Configuration        | None (zero-config)                   |
+| Languages            | EN, FR, ES, DE, NL, PT-BR, IT        |
 
 ## Installation
 
@@ -63,6 +65,22 @@ docker exec -it pdfprev-odoo-16 \
 ```
 
 Runs the Hoot/QUnit specs under `static/tests/` plus the `HttpCase` wrapper in `tests/test_js_suite.py`.
+
+## Languages
+
+Ships with translations for:
+
+| Code     | Language                |
+|----------|-------------------------|
+| `en_US`  | English (source)        |
+| `fr`     | French                  |
+| `es`     | Spanish                 |
+| `de`     | German                  |
+| `nl`     | Dutch                   |
+| `pt_BR`  | Portuguese (Brazil)     |
+| `it`     | Italian                 |
+
+Each user sees the dialog in the language set in **Preferences → Language**. Regional variants (e.g. `fr_BE`, `nl_BE`) inherit from the base language via Odoo's standard fallback. To add a new language, drop a `<code>.po` file into `i18n/` — the canonical template is `i18n/no_pdf_preview_print.pot`.
 
 ## Compatibility
 
