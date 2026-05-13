@@ -39,13 +39,7 @@
 
             <t t-set-slot="footer">
                 <div class="d-flex w-100 justify-content-between align-items-center">
-                    <span class="text-muted small d-none d-md-inline">
-                        <kbd>P</kbd> Print
-                        <span class="mx-1">·</span>
-                        <kbd>D</kbd> Download
-                        <span class="mx-1">·</span>
-                        <kbd>Esc</kbd> Close
-                    </span>
+                    <span class="text-muted small d-none d-md-inline" t-out="hotkeyHintMarkup"/>
                     <div class="d-flex gap-2 ms-auto">
                         <button class="btn btn-primary" t-on-click="onPrint">
                             <i class="fa fa-print me-1"/>Print
