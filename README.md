@@ -1,6 +1,6 @@
 # PDF Preview Before Print
 
-A full-screen preview dialog for every Odoo PDF report. Print, download, or close after a quick review. Pure frontend, zero configuration, available in 8 languages.
+A full-screen preview dialog for every Odoo PDF report. Print, download, or close after a quick review. Pure frontend, zero configuration, available in 9 languages.
 
 ## Choose Your Odoo Version
 
@@ -24,7 +24,7 @@ The technical module name is **`no_pdf_preview_print`** on every version branch.
 - **Single + Batch Reports** — works from form view and list view multi-select.
 - **Zero Configuration** — install and every QWeb PDF report is intercepted.
 - **Lightweight** — pure frontend, no Python models, no database changes.
-- **Translated into 8 Languages** — English, French, Spanish, German, Dutch, Portuguese (BR), Italian, Chinese (Simplified). Each user sees the dialog in their own Odoo language.
+- **Translated into 9 Languages** — English, French, Spanish, German, Dutch, Portuguese (BR), Italian, Chinese (Simplified), Arabic. Each user sees the dialog in their own Odoo language.
 
 ## Quick Install
 
@@ -48,6 +48,7 @@ Ships with translations for:
 | `pt_BR`  | Portuguese (Brazil)     |
 | `it`     | Italian                 |
 | `zh_CN`  | Chinese (Simplified)    |
+| `ar_001` | Arabic                  |
 
 Regional variants (e.g. `fr_BE`, `nl_BE`) inherit from the base language via Odoo's standard fallback. To add a new language, drop a `<code>.po` file into the branch's `i18n/` folder — the canonical template is `i18n/no_pdf_preview_print.pot`.
 
