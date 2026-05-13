@@ -80,3 +80,10 @@ msgstr ""
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
 msgid "Unable to load preview"
 msgstr "Não foi possível carregar a visualização"
+
+#. module: no_pdf_preview_print
+#. odoo-javascript
+#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
+msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
+msgstr "<kbd>P</kbd> Imprimir · <kbd>D</kbd> Baixar · <kbd>Esc</kbd> Fechar"
+

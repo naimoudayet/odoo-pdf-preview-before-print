@@ -2,7 +2,7 @@
 // Copyright 2026 Naim OUDAYET
 // License LGPL-3
 
-import { Component, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
+import { Component, markup, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
 
@@ -31,6 +31,16 @@ export class PreviewDialog extends Component {
 
     get dialogTitle() {
         return this.props.reportName || _t("PDF Preview");
+    }
+
+    // One translatable string for the whole footer hotkey legend — translators
+    // can reorder verb/key combinations to fit natural word order (esp. RTL).
+    // Per ODOO_GUIDELINES §12.6: NEVER split a sentence across multiple _t()
+    // calls. markup() lets us keep <kbd> styling without t-raw / unsafe HTML.
+    get hotkeyHintMarkup() {
+        return markup(_t(
+            "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
+        ));
     }
 
     // --- Event handlers ---
