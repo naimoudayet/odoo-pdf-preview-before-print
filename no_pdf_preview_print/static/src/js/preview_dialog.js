@@ -2,9 +2,11 @@
 // Copyright 2026 Naim OUDAYET
 // License LGPL-3
 
-import { Component, markup, onMounted, onWillUnmount, useRef, useState } from "@odoo/owl";
+import { Component, markup, useRef, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
+import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
+import { useService } from "@web/core/utils/hooks";
 
 export class PreviewDialog extends Component {
     static template = "no_pdf_preview_print.PreviewDialog";
@@ -19,14 +21,14 @@ export class PreviewDialog extends Component {
     setup() {
         this.iframeRef = useRef("previewIframe");
         this.state = useState({ loading: true, error: false });
-        this._onKeydown = this._onKeydown.bind(this);
+        this.hotkey = useService("hotkey");
 
-        onMounted(() => {
-            document.addEventListener("keydown", this._onKeydown);
-        });
-        onWillUnmount(() => {
-            document.removeEventListener("keydown", this._onKeydown);
-        });
+        // Hotkeys via Odoo's service rather than a raw document listener: it
+        // handles input-field bypass, dialog stacking (only the top dialog's
+        // hotkeys fire), and namespace conflict warnings for free. Esc is
+        // bound by the Dialog component itself — no need to handle it.
+        useHotkey("p", () => this.onPrint());
+        useHotkey("d", () => this.onDownload());
     }
 
     get dialogTitle() {
@@ -43,30 +45,23 @@ export class PreviewDialog extends Component {
         ));
     }
 
-    // --- Event handlers ---
-
-    _onKeydown(ev) {
-        if (ev.target.tagName === "INPUT" || ev.target.tagName === "TEXTAREA") {
-            return;
-        }
-        switch (ev.key.toLowerCase()) {
-            case "p":
-                if (!ev.ctrlKey && !ev.metaKey && !ev.altKey) {
-                    ev.preventDefault();
-                    this.onPrint();
-                }
-                break;
-            case "d":
-                if (!ev.ctrlKey && !ev.metaKey && !ev.altKey) {
-                    ev.preventDefault();
-                    this.onDownload();
-                }
-                break;
-        }
-    }
-
     onIframeLoad() {
         this.state.loading = false;
+        // Once the PDF viewer mounts, the iframe steals keyboard focus and
+        // a parent-document listener stops seeing keystrokes. registerIframe
+        // attaches the hotkey service to iframe.contentWindow so P/D still
+        // fire from inside the PDF area. Same mechanism html_editor uses for
+        // its <iframe> body (web/core/hotkeys/hotkey_service.js:registerIframe).
+        // try/catch covers the edge case where contentWindow isn't accessible
+        // (cross-origin or browser PDF sandbox).
+        const iframe = this.iframeRef.el;
+        if (iframe?.contentWindow) {
+            try {
+                this.hotkey.registerIframe(iframe);
+            } catch {
+                /* fall back to parent-document-only hotkeys */
+            }
+        }
     }
 
     onIframeError() {
