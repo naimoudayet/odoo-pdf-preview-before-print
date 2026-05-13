@@ -21,6 +21,7 @@
         "web.assets_backend": [
             "no_pdf_preview_print/static/src/scss/preview.scss",
             "no_pdf_preview_print/static/src/xml/preview_dialog.xml",
+            "no_pdf_preview_print/static/src/js/translation_fix.js",
             "no_pdf_preview_print/static/src/js/preview_dialog.js",
             "no_pdf_preview_print/static/src/js/preview_service.js",
         ],
