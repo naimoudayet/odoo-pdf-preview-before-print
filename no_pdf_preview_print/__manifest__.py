@@ -6,7 +6,7 @@
     "description": "PDF Preview Before Print intercepts the print/download action and shows "
                    "a clean full-screen preview before the document is printed or downloaded. "
                    "Keyboard shortcuts (P/D/Esc), single and batch reports, zero configuration.",
-    "version": "18.0.1.2.0",
+    "version": "18.0.1.3.0",
     "category": "Extra Tools",
     "website": "https://www.oudayet.com",
     "author": "Naim OUDAYET",
