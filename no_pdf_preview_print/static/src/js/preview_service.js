@@ -13,6 +13,8 @@
  */
 
 import { registry } from "@web/core/registry";
+import { user } from "@web/core/user";
+import { rpc } from "@web/core/network/rpc";
 import { PreviewDialog } from "./preview_dialog";
 import { downloadReport } from "@web/webclient/actions/reports/utils";
 
@@ -32,8 +34,12 @@ export function pdfPreviewHandler(action, options, env) {
         reportUrl,
         reportName: action.name || action.display_name || "",
         onDownload() {
-            const ctx = { ...env.services.user.context, ...action.context };
-            downloadReport(env.services.rpc, action, "pdf", ctx);
+            // Both `user` and `rpc` became singleton imports in Odoo 18+
+            // (no longer service-registry entries), so env.services.user
+            // and env.services.rpc are undefined. downloadReport's first
+            // arg is the rpc function itself.
+            const ctx = { ...user.context, ...action.context };
+            downloadReport(rpc, action, "pdf", ctx);
         },
     });
 
