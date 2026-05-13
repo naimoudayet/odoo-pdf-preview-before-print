@@ -3,37 +3,6 @@
 // License LGPL-3
 import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
-function makeKeyEvent(key, opts) {
-    opts = opts || {};
-    let prevented = false;
-    return {
-        key: key,
-        ctrlKey: !!opts.ctrlKey,
-        metaKey: !!opts.metaKey,
-        altKey: !!opts.altKey,
-        target: { tagName: opts.tagName || "BODY" },
-        preventDefault() { prevented = true; },
-        wasPrevented() { return prevented; },
-    };
-}
-
-function makeMockThis() {
-    const mock = {
-        printCalled: 0,
-        state: { loading: true, error: false },
-        iframeRef: { el: null },
-        props: {
-            _onDownloadCalls: 0,
-            _closeCalls: 0,
-            onDownload() { mock.props._onDownloadCalls++; },
-            close() { mock.props._closeCalls++; },
-        },
-        onPrint() { mock.printCalled++; },
-        onDownload() { PreviewDialog.prototype.onDownload.call(mock); },
-    };
-    return mock;
-}
-
 QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
 
     QUnit.module("dialogTitle getter");
@@ -44,81 +13,19 @@ QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
     });
     QUnit.test("empty reportName triggers fallback branch", (assert) => {
         const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
-        let result = null, threw = false;
-        try {
-            result = desc.get.call({ props: { reportName: "" } });
-        } catch (e) {
-            threw = true;
-        }
-        assert.ok(threw || result !== "", "fallback branch was entered");
+        const title = desc.get.call({ props: { reportName: "" } });
+        assert.ok(typeof title === "string" && title.length > 0, "got non-empty fallback string: " + title);
     });
 
-    QUnit.module("_onKeydown");
-    QUnit.test("lowercase p triggers onPrint", (assert) => {
-        const mock = makeMockThis();
-        const ev = makeKeyEvent("p");
-        PreviewDialog.prototype._onKeydown.call(mock, ev);
-        assert.strictEqual(mock.printCalled, 1);
-        assert.ok(ev.wasPrevented());
-    });
-    QUnit.test("uppercase P triggers onPrint", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("P"));
-        assert.strictEqual(mock.printCalled, 1);
-    });
-    QUnit.test("lowercase d triggers onDownload and close", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("d"));
-        assert.strictEqual(mock.props._onDownloadCalls, 1);
-        assert.strictEqual(mock.props._closeCalls, 1);
-    });
-    QUnit.test("uppercase D triggers onDownload", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("D"));
-        assert.strictEqual(mock.props._onDownloadCalls, 1);
-    });
-    QUnit.test("Ctrl+P is ignored", (assert) => {
-        const mock = makeMockThis();
-        const ev = makeKeyEvent("p", { ctrlKey: true });
-        PreviewDialog.prototype._onKeydown.call(mock, ev);
-        assert.strictEqual(mock.printCalled, 0);
-        assert.notOk(ev.wasPrevented());
-    });
-    QUnit.test("Meta+P is ignored", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("p", { metaKey: true }));
-        assert.strictEqual(mock.printCalled, 0);
-    });
-    QUnit.test("Alt+P is ignored", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("p", { altKey: true }));
-        assert.strictEqual(mock.printCalled, 0);
-    });
-    QUnit.test("Ctrl+D is ignored", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("d", { ctrlKey: true }));
-        assert.strictEqual(mock.props._onDownloadCalls, 0);
-    });
-    QUnit.test("focus inside INPUT ignores P and D", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("p", { tagName: "INPUT" }));
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("d", { tagName: "INPUT" }));
-        assert.strictEqual(mock.printCalled, 0);
-        assert.strictEqual(mock.props._onDownloadCalls, 0);
-    });
-    QUnit.test("focus inside TEXTAREA ignores P", (assert) => {
-        const mock = makeMockThis();
-        PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent("p", { tagName: "TEXTAREA" }));
-        assert.strictEqual(mock.printCalled, 0);
-    });
-    QUnit.test("unrelated keys are ignored", (assert) => {
-        const mock = makeMockThis();
-        const ignored = ["Enter", "Tab", " ", "ArrowDown", "Escape", "x"];
-        for (const k of ignored) {
-            PreviewDialog.prototype._onKeydown.call(mock, makeKeyEvent(k));
-        }
-        assert.strictEqual(mock.printCalled, 0);
-        assert.strictEqual(mock.props._onDownloadCalls, 0);
+    QUnit.module("hotkeyHintMarkup getter");
+    QUnit.test("returns a markup-wrapped string mentioning the three keys", (assert) => {
+        const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "hotkeyHintMarkup");
+        const result = desc.get.call({});
+        // markup() returns a String wrapper (or similar) — coerce to plain string for matching
+        const s = String(result);
+        assert.ok(s.includes("<kbd>P</kbd>"), "mentions <kbd>P</kbd>");
+        assert.ok(s.includes("<kbd>D</kbd>"), "mentions <kbd>D</kbd>");
+        assert.ok(s.includes("<kbd>Esc</kbd>"), "mentions <kbd>Esc</kbd>");
     });
 
     QUnit.module("onPrint");
@@ -160,9 +67,33 @@ QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
 
     QUnit.module("iframe lifecycle");
     QUnit.test("onIframeLoad clears loading flag", (assert) => {
-        const mock = { state: { loading: true, error: false } };
+        const mock = {
+            state: { loading: true, error: false },
+            iframeRef: { el: null },
+            hotkey: { registerIframe() {} },
+        };
         PreviewDialog.prototype.onIframeLoad.call(mock);
         assert.strictEqual(mock.state.loading, false);
+    });
+    QUnit.test("onIframeLoad registers the iframe with the hotkey service", (assert) => {
+        let registered = null;
+        const fakeIframe = { contentWindow: {} };
+        const mock = {
+            state: { loading: true, error: false },
+            iframeRef: { el: fakeIframe },
+            hotkey: { registerIframe(iframe) { registered = iframe; } },
+        };
+        PreviewDialog.prototype.onIframeLoad.call(mock);
+        assert.strictEqual(registered, fakeIframe);
+    });
+    QUnit.test("onIframeLoad swallows registerIframe errors", (assert) => {
+        const mock = {
+            state: { loading: true, error: false },
+            iframeRef: { el: { contentWindow: {} } },
+            hotkey: { registerIframe() { throw new Error("boom"); } },
+        };
+        PreviewDialog.prototype.onIframeLoad.call(mock);
+        assert.strictEqual(mock.state.loading, false, "loading still cleared despite throw");
     });
     QUnit.test("onIframeError sets error and clears loading", (assert) => {
         const mock = { state: { loading: true, error: false } };
