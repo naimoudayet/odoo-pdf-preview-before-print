@@ -32,6 +32,10 @@ export function pdfPreviewHandler(action, options, env) {
         reportUrl,
         reportName: action.name || action.display_name || "",
         onDownload() {
+            // In Odoo 17 both `user` and `rpc` are still service-registry
+            // entries (they became singleton imports in v18). Don't switch
+            // to @web/core/user / @web/core/network/rpc imports on this
+            // branch — env.services.* is the v17 idiom.
             const ctx = { ...env.services.user.context, ...action.context };
             downloadReport(env.services.rpc, action, "pdf", ctx);
         },
