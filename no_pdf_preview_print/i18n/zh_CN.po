@@ -80,3 +80,10 @@ msgstr "在打印或下载前在对话框中预览PDF报告"
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
 msgid "Unable to load preview"
 msgstr "无法加载预览"
+
+#. module: no_pdf_preview_print
+#. odoo-javascript
+#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
+msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
+msgstr "<kbd>P</kbd> 打印 · <kbd>D</kbd> 下载 · <kbd>Esc</kbd> 关闭"
+
