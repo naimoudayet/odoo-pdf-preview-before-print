@@ -33,6 +33,6 @@
         "static/description/banner.png",
     ],
     "price": 0,
-    "currency": "EUR",
+    "currency": "USD",
     "support": "contact@oudayet.com",
 }
