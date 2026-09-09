@@ -27,7 +27,7 @@ describe("no_pdf_preview_print / getActiveIds", () => {
             getActiveIds({
                 context: { active_ids: [1] },
                 data: { ids: [99] },
-            })
+            }),
         ).toEqual([1]);
     });
     test("empty active_ids falls through to data.ids", () => {
@@ -35,7 +35,7 @@ describe("no_pdf_preview_print / getActiveIds", () => {
             getActiveIds({
                 context: { active_ids: [] },
                 data: { ids: [7] },
-            })
+            }),
         ).toEqual([7]);
     });
     test("empty data.ids falls through to data.id", () => {
@@ -45,7 +45,9 @@ describe("no_pdf_preview_print / getActiveIds", () => {
         expect(getActiveIds({ context: { active_ids: [3, 1, 2] } })).toEqual([3, 1, 2]);
     });
     test("large IDs preserved without truncation", () => {
-        expect(getActiveIds({ context: { active_ids: [999999999] } })).toEqual([999999999]);
+        expect(getActiveIds({ context: { active_ids: [999999999] } })).toEqual([
+            999999999,
+        ]);
     });
     test("null context does not crash", () => {
         expect(getActiveIds({ context: null, data: { id: 5 } })).toEqual([5]);
@@ -73,22 +75,14 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
     test("returns false for qweb-html reports", () => {
         const env = makeEnv();
         expect(
-            pdfPreviewHandler(
-                { report_type: "qweb-html", report_name: "x" },
-                {},
-                env
-            )
+            pdfPreviewHandler({ report_type: "qweb-html", report_name: "x" }, {}, env),
         ).toBe(false);
         expect(env.added.length).toBe(0);
     });
     test("returns false for qweb-text reports", () => {
         const env = makeEnv();
         expect(
-            pdfPreviewHandler(
-                { report_type: "qweb-text", report_name: "x" },
-                {},
-                env
-            )
+            pdfPreviewHandler({ report_type: "qweb-text", report_name: "x" }, {}, env),
         ).toBe(false);
     });
     test("returns false when no IDs present", () => {
@@ -97,8 +91,8 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
             pdfPreviewHandler(
                 { report_type: "qweb-pdf", report_name: "x", context: {} },
                 {},
-                env
-            )
+                env,
+            ),
         ).toBe(false);
         expect(env.added.length).toBe(0);
     });
@@ -111,7 +105,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [1, 2] },
             },
             {},
-            env
+            env,
         );
         expect(rc).toBe(true);
         expect(env.added.length).toBe(1);
@@ -125,7 +119,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [5] },
             },
             {},
-            env
+            env,
         );
         expect(env.added[0].props.reportUrl).toInclude("sale.report_saleorder");
     });
@@ -138,7 +132,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [5, 6, 7] },
             },
             {},
-            env
+            env,
         );
         expect(env.added[0].props.reportUrl).toInclude("5,6,7");
     });
@@ -152,7 +146,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         expect(env.added[0].props.reportName).toBe("Invoice");
     });
@@ -166,7 +160,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         expect(env.added[0].props.reportName).toBe("Quotation");
     });
@@ -179,7 +173,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         expect(env.added[0].props.reportName).toBe("");
     });
@@ -192,7 +186,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         expect(typeof env.added[0].props.onDownload).toBe("function");
     });
@@ -201,7 +195,7 @@ describe("no_pdf_preview_print / pdfPreviewHandler", () => {
         const rc = pdfPreviewHandler(
             { report_name: "x", context: { active_ids: [1] } },
             {},
-            env
+            env,
         );
         expect(rc).toBe(true);
         expect(env.added.length).toBe(1);

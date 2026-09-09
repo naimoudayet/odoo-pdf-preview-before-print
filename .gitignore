@@ -1,3 +1,8 @@
 __pycache__/
 *.pyc
 *.pyo
+
+# Agent notes, IDE and lint caches - local only
+CLAUDE.md
+.idea/
+node_modules/

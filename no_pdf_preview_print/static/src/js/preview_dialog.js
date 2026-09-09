@@ -40,9 +40,9 @@ export class PreviewDialog extends Component {
     // Per ODOO_GUIDELINES §12.6: NEVER split a sentence across multiple _t()
     // calls. markup() lets us keep <kbd> styling without t-raw / unsafe HTML.
     get hotkeyHintMarkup() {
-        return markup(_t(
-            "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
-        ));
+        return markup(
+            _t("<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"),
+        );
     }
 
     onIframeLoad() {
