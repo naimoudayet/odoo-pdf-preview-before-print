@@ -5,6 +5,44 @@ All notable changes to **PDF Preview Before Print** for Odoo 19.0 are documented
 This file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>` scheme.
 
+## [19.0.1.4.0] - 2026-09-09
+
+### Fixed
+- **The error fallback could never run.** An `<iframe>` fires `load` even for a
+  4xx/5xx, so `onIframeError` was unreachable and a failed report showed a raw
+  "500: Internal Server Error" page inside the preview dialog. The dialog now
+  inspects `contentDocument.contentType` and shows the "Unable to load preview"
+  card instead. It fails open when the type cannot be read, so browsers that
+  hide it keep the previous behaviour rather than showing a false error.
+- **Download silently swallowed failures.** The download promise was neither
+  awaited nor checked, and the dialog closed regardless, so a failed download
+  was indistinguishable from a successful one. The result is now awaited, any
+  message is shown as a sticky notification, and the dialog stays open on
+  failure.
+
+### Changed
+- **The preview no longer intercepts when the server cannot render PDFs.** On
+  such a server Odoo's own path shows a notification and falls back to the HTML
+  report; neither is reproducible from a report handler. Standing aside gives
+  users working standard behaviour instead of a broken preview.
+
+### Removed
+- 18 lines of SCSS styling a portal modal that exists in no version of this
+  module and had no frontend asset bundle.
+
+### Internal
+- Corrected the `preview.scss` header, which declared OPL-1 inside an LGPL-3
+  module.
+- Browser test suite grown from 23 to 45 specs (60 assertions).
+- OCA pre-commit pipeline, `.gitattributes`, and the root `LICENSE` file added.
+
+## [19.0.1.3.0] - 2026-06-20
+
+### Added
+- **Arabic translation** (`ar`) - 9 languages total, completing the portfolio
+  Tier 2 set. Arabic is right-to-left; the dialog uses Bootstrap logical
+  utilities so it mirrors correctly.
+
 ## [19.0.1.2.0] - 2026-05-12
 
 ### Added
