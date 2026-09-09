@@ -11,9 +11,17 @@ Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>
 - **The error fallback could never run.** An `<iframe>` fires `load` even for a
   4xx/5xx, so `onIframeError` was unreachable and a failed report showed a raw
   "500: Internal Server Error" page inside the preview dialog. The dialog now
-  inspects `contentDocument.contentType` and shows the "Unable to load preview"
-  card instead. It fails open when the type cannot be read, so browsers that
-  hide it keep the previous behaviour rather than showing a false error.
+  detects the error document and shows the "Unable to load preview" card
+  instead. The test is whether the iframe actually navigated to the report URL
+  and came back as `text/html`, verified on Chrome and Firefox: a healthy report
+  is `application/pdf` in Chrome, and in Firefox the document is left untouched
+  because its own viewer takes over. Anything unreadable is treated as success,
+  so no browser can produce a false error.
+- **Firefox showed the loading spinner forever.** Firefox renders a PDF in its
+  built-in viewer and never fires `load` on the iframe at all, so the spinner
+  that `load` was supposed to clear stayed on top of a perfectly good report.
+  A three-second fallback now clears it. It only stops the spinner - a late
+  error page is still caught by the normal path when it eventually arrives.
 - **Download silently swallowed failures.** The download promise was neither
   awaited nor checked, and the dialog closed regardless, so a failed download
   was indistinguishable from a successful one. The result is now awaited, any

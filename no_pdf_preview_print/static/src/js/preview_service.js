@@ -74,6 +74,13 @@ export async function pdfPreviewHandler(action, options, env) {
         },
     });
 
+    // Returning true tells core the report was handled. Core then runs the
+    // action's onClose() immediately (action_service.js:1352), so a wizard with
+    // close_on_report_download shuts as the preview opens rather than after the
+    // user downloads. That is deliberate: deferring it would mean holding this
+    // promise open until the dialog closes, which blocks the action manager
+    // behind a modal the user may leave open indefinitely. Documented in the
+    // README and the storefront limitations rather than worked around.
     return true;
 }
 
