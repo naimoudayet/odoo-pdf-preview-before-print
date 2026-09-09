@@ -1,5 +1,10 @@
 # PDF Preview Before Print — Odoo 19
 
+![License](https://img.shields.io/badge/license-LGPL--3-blue)
+![Odoo](https://img.shields.io/badge/Odoo-19.0-blueviolet)
+![Languages](https://img.shields.io/badge/languages-9-orange)
+![Version](https://img.shields.io/badge/version-19.0.1.4.0-informational)
+
 Preview any PDF report in a full-screen dialog before printing or downloading. Works with all standard Odoo reports — single records and batch printing. Zero configuration.
 
 ## Features
@@ -27,12 +32,13 @@ The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, t
 | Item                 | Value                                |
 |----------------------|--------------------------------------|
 | Odoo Version         | 19.0                                 |
+| Module Version       | 19.0.1.4.0                          |
 | License              | LGPL-3                               |
 | Dependencies         | `web`                                |
 | Python Dependencies  | None                                 |
 | Type                 | Pure Frontend (OWL)                  |
 | Configuration        | None (zero-config)                   |
-| Languages            | EN, FR, ES, DE, NL, PT-BR, IT, ZH-CN |
+| Languages            | EN, FR, ES, DE, NL, PT-BR, IT, ZH-CN, AR |
 
 ## Installation
 
@@ -43,6 +49,28 @@ The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, t
 ## Configuration
 
 None. Once installed, every QWeb PDF report shows the preview dialog instead of an immediate download.
+
+## Docker Setup (Development)
+
+```bash
+docker-compose up -d
+```
+
+- Odoo: http://localhost:2019
+- PostgreSQL: internal `db` service (no exposed port by default)
+
+The provided `Dockerfile` installs Chromium and `python3-websocket` so Odoo's `HttpCase.browser_js` can run the JS test suite headlessly.
+
+## Running Tests
+
+```bash
+docker exec -it pdfprev-odoo-19 \
+  odoo --test-enable --stop-after-init \
+  -d test_db -i no_pdf_preview_print \
+  --test-tags no_pdf_preview_print_js
+```
+
+Runs the Hoot/QUnit specs under `static/tests/` plus the `HttpCase` wrapper in `tests/test_js_suite.py`.
 
 ## Languages
 
