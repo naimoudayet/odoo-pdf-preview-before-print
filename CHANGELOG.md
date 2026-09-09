@@ -13,10 +13,10 @@ Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>
   "500: Internal Server Error" page inside the preview dialog. The dialog now
   detects the error document and shows the "Unable to load preview" card
   instead. The test is whether the iframe actually navigated to the report URL
-  and came back as `text/html`, verified on Chrome and Firefox: a healthy report
-  is `application/pdf` in Chrome, and in Firefox the document is left untouched
-  because its own viewer takes over. Anything unreadable is treated as success,
-  so no browser can produce a false error.
+  and came back as `text/html`, verified on Chrome, Firefox and WebKit: a healthy
+  report is `application/pdf` in Chrome, while Firefox and WebKit leave the
+  document untouched because their own viewers take over. Anything unreadable is
+  treated as success, so no browser can produce a false error.
 - **Firefox showed the loading spinner forever.** Firefox renders a PDF in its
   built-in viewer and never fires `load` on the iframe at all, so the spinner
   that `load` was supposed to clear stayed on top of a perfectly good report.
