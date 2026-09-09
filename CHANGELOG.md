@@ -29,6 +29,11 @@ Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>
   failure.
 
 ### Changed
+- **The failed-download notification is titled with the module's own term.**
+  It used core's generic `Report`, which is not in this module's catalogue and
+  resolves out of the flat JS translation dictionary shared by every installed
+  module. It now uses `PDF Preview`, which ships translated in all nine
+  languages.
 - **The preview no longer intercepts when the server cannot render PDFs.** On
   such a server Odoo's own path shows a notification and falls back to the HTML
   report; neither is reproducible from a report handler. Standing aside gives
