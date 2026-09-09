@@ -8,7 +8,7 @@ Each Odoo major version lives on its own branch. Pick the one matching your serv
 
 | Odoo Version | Stable | Development |
 |---|---|---|
-| 19.0 | [`19.0`](../../tree/19.0) | [`19.0.dev`](../../tree/19.0.dev) |
+| 19.0 | [`19.0`](../../tree/19.0) | [`19.0-dev`](../../tree/19.0-dev) |
 | 18.0 | [`18.0`](../../tree/18.0) | [`18.0.dev`](../../tree/18.0.dev) |
 | 17.0 | [`17.0`](../../tree/17.0) | [`17.0.dev`](../../tree/17.0.dev) |
 | 16.0 | [`16.0`](../../tree/16.0) | [`16.0.dev`](../../tree/16.0.dev) |
