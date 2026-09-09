@@ -9,7 +9,7 @@
 
                 <!-- Loading spinner -->
                 <div t-if="state.loading"
-                     class="o_pdf_preview_loading d-flex align-items-center justify-content-center position-absolute w-100 h-100 bg-white"
+                     class="o_pdf_preview_loading d-flex align-items-center justify-content-center position-absolute w-100 h-100"
                      style="z-index: 1;">
                     <div class="text-center text-muted">
                         <i class="fa fa-spinner fa-spin fa-2x mb-2 d-block"/>

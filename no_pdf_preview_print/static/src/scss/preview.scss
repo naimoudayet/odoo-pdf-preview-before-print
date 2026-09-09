@@ -8,7 +8,26 @@
 .o_pdf_preview_container {
     min-height: 0; // allow flex shrink inside dialog
 
+    // Both surfaces follow the theme instead of naming a colour.
+    //
+    // Measured on Odoo 19 Enterprise (saas~19.4+e) and Community 19:
+    //
+    //   token            CE light   EE light   EE dark
+    //   --modal-bg       white      white      #262A36
+    //   --secondary-bg   #e9ecef    #e7e9ed    #262A36
+    //   --white          #FFFFFF    #FFF       #000
+    //
+    // The overlay used Bootstrap's `bg-white`, which resolves through $white
+    // and therefore inverts to PURE BLACK in dark mode - not the dialog's
+    // #262A36 surface, so it painted a darker rectangle over the dialog.
+    // --modal-bg is the dialog's own surface and is reachable here by
+    // inheritance from .modal (verified: var(--modal-bg, #ff00ff) paints
+    // white, not the fallback).
+    .o_pdf_preview_loading {
+        background: var(--modal-bg, #fff);
+    }
+
     .o_pdf_preview_iframe {
-        background: #f5f5f5;
+        background: var(--secondary-bg, #f5f5f5);
     }
 }

@@ -17,6 +17,12 @@ Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>
   report is `application/pdf` in Chrome, while Firefox and WebKit leave the
   document untouched because their own viewers take over. Anything unreadable is
   treated as success, so no browser can produce a false error.
+- **The dialog painted two colours that ignored dark mode.** The loading overlay
+  used Bootstrap's `bg-white`, which resolves through `$white` and therefore
+  inverts to pure black in dark mode rather than the dialog's own surface, and
+  the area behind the PDF was a hardcoded `#f5f5f5` that could not follow a
+  theme at all. Both now use theme tokens - `--modal-bg` and `--secondary-bg` -
+  measured against Odoo 19 Enterprise and Community. Light mode is unchanged.
 - **Firefox showed the loading spinner forever.** Firefox renders a PDF in its
   built-in viewer and never fires `load` on the iframe at all, so the spinner
   that `load` was supposed to clear stayed on top of a perfectly good report.
