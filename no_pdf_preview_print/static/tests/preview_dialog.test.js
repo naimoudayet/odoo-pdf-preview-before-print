@@ -137,38 +137,68 @@ describe("no_pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
 
 describe("no_pdf_preview_print / PreviewDialog - error detection", () => {
     // An iframe fires `load` even for a 4xx/5xx, so onIframeError never runs in
-    // a real browser. These specs pin the contentType check that replaced it.
-    function makeDialog(contentType) {
+    // a real browser. These specs pin the check that replaced it, against the
+    // four cases measured on live Chrome and Firefox:
+    //
+    //   engine   healthy: href / contentType     error: href / contentType
+    //   Chrome   report URL / application/pdf    report URL / text/html
+    //   Firefox  about:blank / text/html         report URL / text/html
+    const URL = "http://localhost:2019/report/pdf/sale.report_saleorder_raw/7";
+
+    function makeDialog(doc) {
         const d = Object.create(PreviewDialog.prototype);
         d.state = { loading: true, error: false, downloading: false };
         d.hotkey = { registerIframe() {} };
-        d.iframeRef = {
-            el: {
-                contentDocument: contentType === undefined ? null : { contentType },
-                contentWindow: {},
-            },
-        };
+        d.iframeRef = { el: { contentDocument: doc, contentWindow: {} } };
         return d;
     }
+    const chromePdf = () =>
+        makeDialog({ contentType: "application/pdf", location: { href: URL } });
+    const chromeErr = () =>
+        makeDialog({ contentType: "text/html", location: { href: URL } });
+    const firefoxPdf = () =>
+        makeDialog({ contentType: "text/html", location: { href: "about:blank" } });
+    const firefoxErr = () =>
+        makeDialog({ contentType: "text/html", location: { href: URL } });
 
-    test("an error page (text/html) is treated as a failure", () => {
-        const d = makeDialog("text/html");
+    test("Chrome: an error page at the report URL is a failure", () => {
+        const d = chromeErr();
         d.onIframeLoad();
         expect(d.state.error).toBe(true);
         expect(d.state.loading).toBe(false);
     });
 
-    test("a real PDF is not treated as a failure", () => {
-        const d = makeDialog("application/pdf");
+    test("Chrome: a real PDF is not a failure", () => {
+        const d = chromePdf();
         d.onIframeLoad();
         expect(d.state.error).toBe(false);
         expect(d.state.loading).toBe(false);
     });
 
-    test("an unreadable contentDocument fails OPEN", () => {
-        // Firefox/Safari may not expose contentType for their PDF viewers; a
-        // false error would be worse than showing the preview.
-        const d = makeDialog(undefined);
+    test("Firefox: an error page at the report URL is a failure", () => {
+        const d = firefoxErr();
+        d.onIframeLoad();
+        expect(d.state.error).toBe(true);
+    });
+
+    test("Firefox: a healthy PDF left on about:blank is NOT a failure", () => {
+        // The regression this guards: Firefox reports text/html for a document
+        // it never navigated, so a bare "not application/pdf" test would flag
+        // every healthy report in Firefox as broken.
+        const d = firefoxPdf();
+        d.onIframeLoad();
+        expect(d.state.error).toBe(false);
+        expect(d.state.loading).toBe(false);
+    });
+
+    test("a null contentDocument fails OPEN", () => {
+        const d = makeDialog(null);
+        d.onIframeLoad();
+        expect(d.state.error).toBe(false);
+    });
+
+    test("a document with no location fails OPEN", () => {
+        const d = makeDialog({ contentType: "text/html" });
         d.onIframeLoad();
         expect(d.state.error).toBe(false);
     });
@@ -187,6 +217,70 @@ describe("no_pdf_preview_print / PreviewDialog - error detection", () => {
         };
         d.onIframeLoad();
         expect(d.state.error).toBe(false);
+    });
+});
+
+describe("no_pdf_preview_print / PreviewDialog - settle fallback", () => {
+    // Firefox never fires `load` for a PDF it renders natively, so the spinner
+    // would never clear. onSettleTimeout is the fallback.
+    function makeDialog(doc, loading = true) {
+        const d = Object.create(PreviewDialog.prototype);
+        d.state = { loading, error: false, downloading: false };
+        d.hotkey = { registerIframe() {} };
+        d.iframeRef = { el: { contentDocument: doc, contentWindow: {} } };
+        return d;
+    }
+
+    test("clears the spinner when the iframe stayed silent", () => {
+        const d = makeDialog({
+            contentType: "text/html",
+            location: { href: "about:blank" },
+        });
+        d.onSettleTimeout();
+        expect(d.state.loading).toBe(false);
+        expect(d.state.error).toBe(false);
+    });
+
+    test("does not invent an error for a silent iframe", () => {
+        const d = makeDialog(null);
+        d.onSettleTimeout();
+        expect(d.state.error).toBe(false);
+    });
+
+    test("still reports an error page that had already arrived", () => {
+        const d = makeDialog({
+            contentType: "text/html",
+            location: { href: "http://x/report/pdf/no_such.report/1" },
+        });
+        d.onSettleTimeout();
+        expect(d.state.error).toBe(true);
+    });
+
+    test("is a no-op once loading has already cleared", () => {
+        const d = makeDialog(
+            { contentType: "text/html", location: { href: "http://x/err" } },
+            false,
+        );
+        d.onSettleTimeout();
+        // onIframeLoad already ran and made the call; the timer must not
+        // second-guess it.
+        expect(d.state.error).toBe(false);
+    });
+
+    test("a late error page still flags through onIframeLoad", () => {
+        // Timer fires first on a slow server, THEN the 500 arrives.
+        const d = makeDialog({
+            contentType: "text/html",
+            location: { href: "about:blank" },
+        });
+        d.onSettleTimeout();
+        expect(d.state.error).toBe(false);
+        d.iframeRef.el.contentDocument = {
+            contentType: "text/html",
+            location: { href: "http://x/report/pdf/slow.report/1" },
+        };
+        d.onIframeLoad();
+        expect(d.state.error).toBe(true);
     });
 });
 

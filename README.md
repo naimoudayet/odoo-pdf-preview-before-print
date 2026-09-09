@@ -27,6 +27,15 @@ Preview any PDF report in a full-screen dialog before printing or downloading. W
 
 The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, text) fall through unchanged.
 
+### Known behaviour: wizards close as the preview opens
+
+Odoo runs a report action's `onClose()` as soon as a handler reports the report
+as handled, so a wizard configured with `close_on_report_download` closes while
+the preview is still on screen instead of after the download. Deferring it would
+mean holding the handler's promise open until the dialog closes, which blocks the
+action manager behind a modal the user may leave open. The preview, Print and
+Download all still work normally; only the parent wizard's timing differs.
+
 ## Technical Details
 
 | Item                 | Value                                |
