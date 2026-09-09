@@ -18,6 +18,12 @@ msgstr ""
 
 #. module: no_pdf_preview_print
 #. odoo-javascript
+#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
+msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
+msgstr "<kbd>P</kbd> Imprimir · <kbd>D</kbd> Baixar · <kbd>Esc</kbd> Fechar"
+
+#. module: no_pdf_preview_print
+#. odoo-javascript
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
 msgid "Close"
 msgstr "Fechar"
@@ -58,16 +64,10 @@ msgid ""
 "clean full-screen preview before the document is printed or downloaded. "
 "Keyboard shortcuts (P/D/Esc), single and batch reports, zero configuration."
 msgstr ""
-"Visualização de PDF antes de imprimir intercepta a ação de imprimir/baixar "
-"e exibe uma visualização limpa em tela cheia antes que o documento seja "
-"impresso ou baixado. Atalhos de teclado (P/D/Esc), relatórios individuais "
-"e em lote, sem necessidade de configuração."
-
-#. module: no_pdf_preview_print
-#. odoo-javascript
-#: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
-msgid "Print"
-msgstr "Imprimir"
+"Visualização de PDF antes de imprimir intercepta a ação de imprimir/baixar e"
+" exibe uma visualização limpa em tela cheia antes que o documento seja "
+"impresso ou baixado. Atalhos de teclado (P/D/Esc), relatórios individuais e "
+"em lote, sem necessidade de configuração."
 
 #. module: no_pdf_preview_print
 #: model:ir.module.module,summary:no_pdf_preview_print.module_meta_information
@@ -78,12 +78,11 @@ msgstr ""
 #. module: no_pdf_preview_print
 #. odoo-javascript
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
-msgid "Unable to load preview"
-msgstr "Não foi possível carregar a visualização"
+msgid "Print"
+msgstr "Imprimir"
 
 #. module: no_pdf_preview_print
 #. odoo-javascript
-#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
-msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
-msgstr "<kbd>P</kbd> Imprimir · <kbd>D</kbd> Baixar · <kbd>Esc</kbd> Fechar"
-
+#: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
+msgid "Unable to load preview"
+msgstr "Não foi possível carregar a visualização"

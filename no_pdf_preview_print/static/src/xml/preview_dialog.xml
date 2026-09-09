@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <!-- Copyright 2026 Naim OUDAYET — License LGPL-3 -->
 <templates xml:space="preserve">
 
@@ -9,7 +9,7 @@
 
                 <!-- Loading spinner -->
                 <div t-if="state.loading"
-                     class="o_pdf_preview_loading d-flex align-items-center justify-content-center position-absolute w-100 h-100 bg-white"
+                     class="o_pdf_preview_loading d-flex align-items-center justify-content-center position-absolute w-100 h-100"
                      style="z-index: 1;">
                     <div class="text-center text-muted">
                         <i class="fa fa-spinner fa-spin fa-2x mb-2 d-block"/>
@@ -23,7 +23,7 @@
                     <div class="text-center text-muted">
                         <i class="fa fa-exclamation-triangle fa-2x mb-2 d-block text-warning"/>
                         <p>Unable to load preview</p>
-                        <button class="btn btn-primary btn-sm" t-on-click="onDownload">
+                        <button class="btn btn-primary btn-sm" t-on-click="onDownload" t-att-disabled="state.downloading">
                             <i class="fa fa-download me-1"/>Download instead
                         </button>
                     </div>
@@ -44,7 +44,7 @@
                         <button class="btn btn-primary" t-on-click="onPrint">
                             <i class="fa fa-print me-1"/>Print
                         </button>
-                        <button class="btn btn-secondary" t-on-click="onDownload">
+                        <button class="btn btn-secondary" t-on-click="onDownload" t-att-disabled="state.downloading">
                             <i class="fa fa-download me-1"/>Download
                         </button>
                         <button class="btn btn-light" t-on-click="props.close">

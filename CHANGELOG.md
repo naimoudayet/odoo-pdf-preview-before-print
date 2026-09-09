@@ -5,6 +5,58 @@ All notable changes to **PDF Preview Before Print** for Odoo 18.0 are documented
 This file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>` scheme.
 
+## [18.0.1.4.0] - 2026-09-09
+
+### Fixed
+- **The error fallback could never run.** An `<iframe>` fires `load` even for a
+  4xx/5xx, so `onIframeError` was unreachable and a failed report showed a raw
+  "500: Internal Server Error" page inside the preview dialog. The dialog now
+  detects the error document and shows the "Unable to load preview" card
+  instead. The test is whether the iframe actually navigated to the report URL
+  and came back as `text/html`, verified on Chrome, Firefox and WebKit: a healthy
+  report is `application/pdf` in Chrome, while Firefox and WebKit leave the
+  document untouched because their own viewers take over. Anything unreadable is
+  treated as success, so no browser can produce a false error.
+- **Firefox showed the loading spinner forever.** Firefox renders a PDF in its
+  built-in viewer and never fires `load` on the iframe at all, so the spinner
+  that `load` was supposed to clear stayed on top of a perfectly good report.
+  A three-second fallback now clears it. It only stops the spinner - a late
+  error page is still caught by the normal path when it eventually arrives.
+- **The dialog painted two colours that ignored dark mode.** The loading overlay
+  used Bootstrap's `bg-white`, which resolves through `$white` and therefore
+  inverts to pure black in dark mode rather than the dialog's own surface, and
+  the area behind the PDF was a hardcoded `#f5f5f5` that could not follow a
+  theme at all. Both now use theme tokens - `--modal-bg` and `--secondary-bg` -
+  measured on Odoo 18 Community and 19 Enterprise. Light mode is unchanged.
+- **Download silently swallowed failures.** The download promise was neither
+  awaited nor checked, and the dialog closed regardless, so a failed download
+  was indistinguishable from a successful one. The result is now awaited, any
+  message is shown as a sticky notification, and the dialog stays open on
+  failure.
+
+### Changed
+- **The preview no longer intercepts when the server cannot render PDFs.** On
+  such a server Odoo's own path shows a notification and falls back to the HTML
+  report; neither is reproducible from a report handler. Standing aside gives
+  users working standard behaviour instead of a broken preview.
+
+### Removed
+- 13 lines of SCSS styling a portal modal that exists in no version of this
+  module and had no frontend asset bundle.
+
+### Internal
+- Corrected the `preview.scss` header, which declared OPL-1 inside an LGPL-3
+  module.
+- Browser test suite grown from 31 to 53 specs (71 assertions).
+- OCA pre-commit pipeline, `.gitattributes`, and the root `LICENSE` file added.
+
+## [18.0.1.3.0] - 2026-06-20
+
+### Added
+- **Arabic translation** (`ar`) - 9 languages total, completing the portfolio
+  Tier 2 set. Arabic is right-to-left; the dialog uses Bootstrap logical
+  utilities so it mirrors correctly.
+
 ## [18.0.1.2.0] - 2026-05-12
 
 ### Added

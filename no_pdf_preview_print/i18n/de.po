@@ -18,6 +18,13 @@ msgstr ""
 
 #. module: no_pdf_preview_print
 #. odoo-javascript
+#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
+msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
+msgstr ""
+"<kbd>P</kbd> Drucken · <kbd>D</kbd> Herunterladen · <kbd>Esc</kbd> Schließen"
+
+#. module: no_pdf_preview_print
+#. odoo-javascript
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
 msgid "Close"
 msgstr "Schließen"
@@ -64,12 +71,6 @@ msgstr ""
 "keine Konfiguration erforderlich."
 
 #. module: no_pdf_preview_print
-#. odoo-javascript
-#: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
-msgid "Print"
-msgstr "Drucken"
-
-#. module: no_pdf_preview_print
 #: model:ir.module.module,summary:no_pdf_preview_print.module_meta_information
 msgid "Preview PDF reports in a dialog before printing or downloading"
 msgstr ""
@@ -78,12 +79,11 @@ msgstr ""
 #. module: no_pdf_preview_print
 #. odoo-javascript
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
-msgid "Unable to load preview"
-msgstr "Vorschau kann nicht geladen werden"
+msgid "Print"
+msgstr "Drucken"
 
 #. module: no_pdf_preview_print
 #. odoo-javascript
-#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
-msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
-msgstr "<kbd>P</kbd> Drucken · <kbd>D</kbd> Herunterladen · <kbd>Esc</kbd> Schließen"
-
+#: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
+msgid "Unable to load preview"
+msgstr "Vorschau kann nicht geladen werden"
