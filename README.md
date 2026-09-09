@@ -52,7 +52,12 @@ None. Once installed, every QWeb PDF report shows the preview dialog instead of 
 
 ## Docker Setup (Development)
 
+The dev stack lives on the **`18.0-dev`** branch - `Dockerfile` and
+`docker-compose.yml` are not shipped on the App Store branch, which carries the
+addon only.
+
 ```bash
+git checkout 18.0-dev
 docker-compose up -d
 ```
 
@@ -70,7 +75,9 @@ docker exec -it pdfprev-odoo-18 \
   --test-tags no_pdf_preview_print_js
 ```
 
-Runs the Hoot/QUnit specs under `static/tests/` plus the `HttpCase` wrapper in `tests/test_js_suite.py`.
+Runs the Hoot specs under `static/tests/` through the `HttpCase` wrapper in
+`tests/test_js_suite.py`. The Chromium-equipped image it needs is on
+**`18.0-dev`**; the specs and the wrapper ship on every branch.
 
 ## Languages
 
