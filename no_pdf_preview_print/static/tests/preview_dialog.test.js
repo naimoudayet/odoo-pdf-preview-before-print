@@ -5,7 +5,10 @@ import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
 describe("no_pdf_preview_print / PreviewDialog - dialogTitle", () => {
     test("uses props.reportName when provided", () => {
-        const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
+        const desc = Object.getOwnPropertyDescriptor(
+            PreviewDialog.prototype,
+            "dialogTitle",
+        );
         const title = desc.get.call({ props: { reportName: "Invoice 0001" } });
         expect(title).toBe("Invoice 0001");
     });
@@ -23,12 +26,21 @@ describe("no_pdf_preview_print / PreviewDialog - dialogTitle", () => {
 
 describe("no_pdf_preview_print / PreviewDialog - onPrint", () => {
     test("focuses and prints the iframe contentWindow", () => {
-        let focused = 0, printed = 0;
+        let focused = 0,
+            printed = 0;
         const mock = {
-            iframeRef: { el: { contentWindow: {
-                focus() { focused++; },
-                print() { printed++; },
-            } } },
+            iframeRef: {
+                el: {
+                    contentWindow: {
+                        focus() {
+                            focused++;
+                        },
+                        print() {
+                            printed++;
+                        },
+                    },
+                },
+            },
         };
         PreviewDialog.prototype.onPrint.call(mock);
         expect(focused).toBe(1);
@@ -39,7 +51,9 @@ describe("no_pdf_preview_print / PreviewDialog - onPrint", () => {
         expect(true).toBe(true);
     });
     test("no-op when contentWindow is missing", () => {
-        PreviewDialog.prototype.onPrint.call({ iframeRef: { el: { contentWindow: null } } });
+        PreviewDialog.prototype.onPrint.call({
+            iframeRef: { el: { contentWindow: null } },
+        });
         expect(true).toBe(true);
     });
 });
@@ -49,8 +63,12 @@ describe("no_pdf_preview_print / PreviewDialog - onDownload", () => {
         const order = [];
         const mock = {
             props: {
-                onDownload() { order.push("download"); },
-                close() { order.push("close"); },
+                onDownload() {
+                    order.push("download");
+                },
+                close() {
+                    order.push("close");
+                },
             },
         };
         PreviewDialog.prototype.onDownload.call(mock);
@@ -74,7 +92,11 @@ describe("no_pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
         const mock = {
             state: { loading: true, error: false },
             iframeRef: { el: fakeIframe },
-            hotkey: { registerIframe(iframe) { registered = iframe; } },
+            hotkey: {
+                registerIframe(iframe) {
+                    registered = iframe;
+                },
+            },
         };
         PreviewDialog.prototype.onIframeLoad.call(mock);
         expect(registered).toBe(fakeIframe);
@@ -83,7 +105,11 @@ describe("no_pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
         const mock = {
             state: { loading: true, error: false },
             iframeRef: { el: { contentWindow: {} } },
-            hotkey: { registerIframe() { throw new Error("boom"); } },
+            hotkey: {
+                registerIframe() {
+                    throw new Error("boom");
+                },
+            },
         };
         PreviewDialog.prototype.onIframeLoad.call(mock);
         expect(mock.state.loading).toBe(false);
