@@ -103,6 +103,6 @@ Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>
 - **Keyboard Shortcuts**: `P` to print, `D` to download, `Esc` to close.
 - **Single + Batch printing**: works from form-view print buttons and from list-view multi-select actions.
 - Handler registered in Odoo 19.0's `ir.actions.report handlers` registry - non-PDF reports (XLSX, CSV, HTML, text) fall through unchanged.
-- Hoot/QUnit JS test suite covering the dialog component, the report handler, and the `getActiveIds` extractor.
+- Hoot JS test suite covering the dialog component, the report handler, and the `getActiveIds` extractor.
 - `HttpCase`-based Python wrapper to run the JS suite via headless Chrome.
 - Zero-configuration installation: no models, no database changes, no per-report opt-in.
