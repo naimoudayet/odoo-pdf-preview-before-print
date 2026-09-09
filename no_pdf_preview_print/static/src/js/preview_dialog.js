@@ -186,7 +186,15 @@ export class PreviewDialog extends Component {
             // older/other caller keeps working.
             const { success = true, message } = result || {};
             if (message) {
-                this.notification.add(message, { sticky: true, title: _t("Report") });
+                // Title reuses the module's own already-translated term rather
+                // than core's generic "Report": a bare, common msgid resolves
+                // out of the flat JS translation dict shared by every installed
+                // module, so whichever module's catalogue happens to win supplies
+                // the text. "PDF Preview" is ours and ships in all 9 languages.
+                this.notification.add(message, {
+                    sticky: true,
+                    title: _t("PDF Preview"),
+                });
             }
             if (success) {
                 this.props.close();
