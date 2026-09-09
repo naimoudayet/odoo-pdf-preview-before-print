@@ -325,6 +325,13 @@
             <div class="col-md-6 col-12 mb-3">
                 <div style="background-color: #FFF3CD; border: 1px solid #FFEEBA; border-radius: 8px; padding: 16px 20px;">
                     <strong style="color: #856404;">&#9888;</strong>&nbsp;
+                    <strong>Wizards close as the preview opens</strong>
+                    <p style="font-size: 13px; color: #856404; margin: 6px 0 0;">A wizard set to close on report download shuts while the preview is still on screen, not after you download. Odoo decides that timing, not this module. Preview, Print and Download all work normally.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-12 mb-3">
+                <div style="background-color: #FFF3CD; border: 1px solid #FFEEBA; border-radius: 8px; padding: 16px 20px;">
+                    <strong style="color: #856404;">&#9888;</strong>&nbsp;
                     <strong>Mobile-browser PDF rendering</strong>
                     <p style="font-size: 13px; color: #856404; margin: 6px 0 0;">Inline iframe PDF rendering varies by mobile browser. On limited platforms the user can still tap Download to fetch the file.</p>
                 </div>
@@ -361,7 +368,7 @@
             </div>
             <div style="border-bottom: 1px solid #E8DDE5; padding: 16px 0;">
                 <strong style="color: #714B67;">What about Odoo 16 / 17 / 19?</strong>
-                <p style="color: #475569; font-size: 14px; margin: 8px 0 0;">This branch targets Odoo 18. The handler hooks into the v18 <em>"ir.actions.report handlers"</em> registry, which differs across versions. Each version branch ships separately.</p>
+                <p style="color: #475569; font-size: 14px; margin: 8px 0 0;">Already available. This module ships for Odoo 16, 17, 18 and 19 - each with its own App Store listing and its own branch. The report-handler mechanism differs between versions, so each series gets a build made for it rather than a backport that mostly works.</p>
             </div>
             <div style="border-bottom: 1px solid #E8DDE5; padding: 16px 0;">
                 <strong style="color: #714B67;">Does it conflict with PDF Password Protection?</strong>
