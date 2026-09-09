@@ -2,7 +2,7 @@ FROM odoo:19
 USER root
 
 # Chromium + websocket-client — Odoo's HttpCase.browser_js uses Chrome
-# Headless over a websocket bridge. Needed to run the Hoot/QUnit JS suites
+# Headless over a websocket bridge. Needed to run the Hoot JS suites
 # from --test-tags=:WebSuite.test_unit_desktop (v18+) / :WebSuite (v16/17).
 RUN apt-get update \
  && apt-get install -y --no-install-recommends wget gnupg ca-certificates \
