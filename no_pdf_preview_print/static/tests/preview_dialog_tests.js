@@ -4,37 +4,60 @@
 import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
 QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
-
     QUnit.module("dialogTitle getter");
     QUnit.test("uses props.reportName when provided", (assert) => {
-        const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
+        const desc = Object.getOwnPropertyDescriptor(
+            PreviewDialog.prototype,
+            "dialogTitle",
+        );
         const title = desc.get.call({ props: { reportName: "Invoice 0001" } });
         assert.strictEqual(title, "Invoice 0001");
     });
     QUnit.test("empty reportName triggers fallback branch", (assert) => {
-        const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "dialogTitle");
+        const desc = Object.getOwnPropertyDescriptor(
+            PreviewDialog.prototype,
+            "dialogTitle",
+        );
         const title = desc.get.call({ props: { reportName: "" } });
-        assert.ok(typeof title === "string" && title.length > 0, "got non-empty fallback string: " + title);
+        assert.ok(
+            typeof title === "string" && title.length > 0,
+            "got non-empty fallback string: " + title,
+        );
     });
 
     QUnit.module("hotkeyHintMarkup getter");
-    QUnit.test("returns a markup-wrapped string mentioning the three keys", (assert) => {
-        const desc = Object.getOwnPropertyDescriptor(PreviewDialog.prototype, "hotkeyHintMarkup");
-        const result = desc.get.call({});
-        const s = String(result);
-        assert.ok(s.includes("<kbd>P</kbd>"), "mentions <kbd>P</kbd>");
-        assert.ok(s.includes("<kbd>D</kbd>"), "mentions <kbd>D</kbd>");
-        assert.ok(s.includes("<kbd>Esc</kbd>"), "mentions <kbd>Esc</kbd>");
-    });
+    QUnit.test(
+        "returns a markup-wrapped string mentioning the three keys",
+        (assert) => {
+            const desc = Object.getOwnPropertyDescriptor(
+                PreviewDialog.prototype,
+                "hotkeyHintMarkup",
+            );
+            const result = desc.get.call({});
+            const s = String(result);
+            assert.ok(s.includes("<kbd>P</kbd>"), "mentions <kbd>P</kbd>");
+            assert.ok(s.includes("<kbd>D</kbd>"), "mentions <kbd>D</kbd>");
+            assert.ok(s.includes("<kbd>Esc</kbd>"), "mentions <kbd>Esc</kbd>");
+        },
+    );
 
     QUnit.module("onPrint");
     QUnit.test("focuses and prints the iframe contentWindow", (assert) => {
-        let focused = 0, printed = 0;
+        let focused = 0,
+            printed = 0;
         const mock = {
-            iframeRef: { el: { contentWindow: {
-                focus() { focused++; },
-                print() { printed++; },
-            } } },
+            iframeRef: {
+                el: {
+                    contentWindow: {
+                        focus() {
+                            focused++;
+                        },
+                        print() {
+                            printed++;
+                        },
+                    },
+                },
+            },
         };
         PreviewDialog.prototype.onPrint.call(mock);
         assert.strictEqual(focused, 1);
@@ -56,8 +79,12 @@ QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
         const order = [];
         const mock = {
             props: {
-                onDownload() { order.push("download"); },
-                close() { order.push("close"); },
+                onDownload() {
+                    order.push("download");
+                },
+                close() {
+                    order.push("close");
+                },
             },
         };
         PreviewDialog.prototype.onDownload.call(mock);
@@ -74,25 +101,40 @@ QUnit.module("no_pdf_preview_print / PreviewDialog", {}, function () {
         PreviewDialog.prototype.onIframeLoad.call(mock);
         assert.strictEqual(mock.state.loading, false);
     });
-    QUnit.test("onIframeLoad registers the iframe with the hotkey service", (assert) => {
-        let registered = null;
-        const fakeIframe = { contentWindow: {} };
-        const mock = {
-            state: { loading: true, error: false },
-            iframeRef: { el: fakeIframe },
-            hotkey: { registerIframe(iframe) { registered = iframe; } },
-        };
-        PreviewDialog.prototype.onIframeLoad.call(mock);
-        assert.strictEqual(registered, fakeIframe);
-    });
+    QUnit.test(
+        "onIframeLoad registers the iframe with the hotkey service",
+        (assert) => {
+            let registered = null;
+            const fakeIframe = { contentWindow: {} };
+            const mock = {
+                state: { loading: true, error: false },
+                iframeRef: { el: fakeIframe },
+                hotkey: {
+                    registerIframe(iframe) {
+                        registered = iframe;
+                    },
+                },
+            };
+            PreviewDialog.prototype.onIframeLoad.call(mock);
+            assert.strictEqual(registered, fakeIframe);
+        },
+    );
     QUnit.test("onIframeLoad swallows registerIframe errors", (assert) => {
         const mock = {
             state: { loading: true, error: false },
             iframeRef: { el: { contentWindow: {} } },
-            hotkey: { registerIframe() { throw new Error("boom"); } },
+            hotkey: {
+                registerIframe() {
+                    throw new Error("boom");
+                },
+            },
         };
         PreviewDialog.prototype.onIframeLoad.call(mock);
-        assert.strictEqual(mock.state.loading, false, "loading still cleared despite throw");
+        assert.strictEqual(
+            mock.state.loading,
+            false,
+            "loading still cleared despite throw",
+        );
     });
     QUnit.test("onIframeError sets error and clears loading", (assert) => {
         const mock = { state: { loading: true, error: false } };

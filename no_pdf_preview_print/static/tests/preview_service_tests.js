@@ -13,7 +13,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
     QUnit.test("returns context.active_ids array", (assert) => {
         assert.deepEqual(
             getActiveIds({ context: { active_ids: [1, 2, 3] } }),
-            [1, 2, 3]
+            [1, 2, 3],
         );
     });
     QUnit.test("wraps context.active_id in an array", (assert) => {
@@ -34,7 +34,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [1] },
                 data: { ids: [99] },
             }),
-            [1]
+            [1],
         );
     });
     QUnit.test("empty active_ids array falls through to data.ids", (assert) => {
@@ -43,32 +43,26 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [] },
                 data: { ids: [7] },
             }),
-            [7]
+            [7],
         );
     });
     QUnit.test("empty data.ids falls through to data.id", (assert) => {
-        assert.deepEqual(
-            getActiveIds({ data: { ids: [], id: 7 } }),
-            [7]
-        );
+        assert.deepEqual(getActiveIds({ data: { ids: [], id: 7 } }), [7]);
     });
     QUnit.test("preserves order of IDs", (assert) => {
         assert.deepEqual(
             getActiveIds({ context: { active_ids: [3, 1, 2] } }),
-            [3, 1, 2]
+            [3, 1, 2],
         );
     });
     QUnit.test("large IDs preserved without truncation", (assert) => {
         assert.deepEqual(
             getActiveIds({ context: { active_ids: [999999999] } }),
-            [999999999]
+            [999999999],
         );
     });
     QUnit.test("null context does not crash", (assert) => {
-        assert.deepEqual(
-            getActiveIds({ context: null, data: { id: 5 } }),
-            [5]
-        );
+        assert.deepEqual(getActiveIds({ context: null, data: { id: 5 } }), [5]);
     });
 
     // -------------------------------------------------------------------
@@ -95,7 +89,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
         const env = makeEnv();
         assert.strictEqual(
             pdfPreviewHandler({ report_type: "qweb-html", report_name: "x" }, {}, env),
-            false
+            false,
         );
         assert.strictEqual(env.added.length, 0, "no dialog opened");
     });
@@ -103,7 +97,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
         const env = makeEnv();
         assert.strictEqual(
             pdfPreviewHandler({ report_type: "qweb-text", report_name: "x" }, {}, env),
-            false
+            false,
         );
     });
     QUnit.test("returns false when no IDs present", (assert) => {
@@ -112,9 +106,9 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
             pdfPreviewHandler(
                 { report_type: "qweb-pdf", report_name: "x", context: {} },
                 {},
-                env
+                env,
             ),
-            false
+            false,
         );
         assert.strictEqual(env.added.length, 0);
     });
@@ -127,7 +121,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [1, 2] },
             },
             {},
-            env
+            env,
         );
         assert.strictEqual(rc, true);
         assert.strictEqual(env.added.length, 1, "exactly one dialog opened");
@@ -141,11 +135,11 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [5] },
             },
             {},
-            env
+            env,
         );
         assert.ok(
             env.added[0].props.reportUrl.includes("sale.report_saleorder"),
-            "URL: " + env.added[0].props.reportUrl
+            "URL: " + env.added[0].props.reportUrl,
         );
     });
     QUnit.test("reportUrl contains comma-joined IDs", (assert) => {
@@ -157,14 +151,11 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [5, 6, 7] },
             },
             {},
-            env
+            env,
         );
         const url = env.added[0].props.reportUrl;
         // v16 may URL-encode the comma in the query string path, so accept both
-        assert.ok(
-            url.includes("5,6,7") || url.includes("5%2C6%2C7"),
-            "URL: " + url
-        );
+        assert.ok(url.includes("5,6,7") || url.includes("5%2C6%2C7"), "URL: " + url);
     });
     QUnit.test("reportName prop uses action.name", (assert) => {
         const env = makeEnv();
@@ -176,7 +167,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         assert.strictEqual(env.added[0].props.reportName, "Invoice");
     });
@@ -190,7 +181,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         assert.strictEqual(env.added[0].props.reportName, "Quotation");
     });
@@ -203,7 +194,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         assert.strictEqual(env.added[0].props.reportName, "");
     });
@@ -216,7 +207,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
                 context: { active_ids: [1] },
             },
             {},
-            env
+            env,
         );
         assert.strictEqual(typeof env.added[0].props.onDownload, "function");
     });
@@ -226,7 +217,7 @@ QUnit.module("no_pdf_preview_print / preview_service", {}, function () {
         const rc = pdfPreviewHandler(
             { report_name: "x", context: { active_ids: [1] } },
             {},
-            env
+            env,
         );
         assert.strictEqual(rc, true);
         assert.strictEqual(env.added.length, 1);
