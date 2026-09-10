@@ -8,13 +8,18 @@ from odoo.tests import HttpCase
 class PdfPreviewJsSuite(HttpCase):
     """Wraps Odoo's QUnit JS test runner for just this module's specs.
 
-    Loads /web/tests?module=no_pdf_preview_print in headless Chrome so only our
-    QUnit tests execute, then waits for QUnit.done to report pass/fail.
+    Uses QUnit's own ?filter=, which substring-matches the full test name and
+    therefore catches both of this module's QUnit modules. ?module= is NOT a
+    substitute: QUnit reads it as an exact QUnit-module name, and neither
+    "no_pdf_preview_print / PreviewDialog" nor
+    "no_pdf_preview_print / preview_service" equals "no_pdf_preview_print", so
+    the filter misses and the ENTIRE Odoo web suite runs - minutes instead of
+    the ~0.4s these specs take.
     """
 
     def test_js_suite(self):
         self.browser_js(
-            "/web/tests?module=no_pdf_preview_print",
+            "/web/tests?filter=no_pdf_preview_print",
             "",
             "",
             login="admin",
