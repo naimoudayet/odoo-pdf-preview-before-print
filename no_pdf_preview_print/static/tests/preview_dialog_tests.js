@@ -12,17 +12,32 @@ QUnit.module("no_pdf_preview_print / PreviewDialog - dialogTitle", {}, function 
         const title = desc.get.call({ props: { reportName: "Invoice 0001" } });
         assert.strictEqual(title, "Invoice 0001");
     });
-    // Empty-reportName fallback hits `_t("PDF Preview")`; in Hoot's pre-mount
-    // context the translation service throws ("translation error"). That branch
-    // is covered by the actual component render in browser usage — not worth
-    // mocking the translation service here.
-});
+    // These two are omitted on 18.0/19.0 because Hoot rejects `_t()` before the
+    // translation service is initialized. QUnit has no such restriction, so
+    // this series keeps the coverage it always had.
+    QUnit.test("empty reportName triggers fallback branch", (assert) => {
+        const desc = Object.getOwnPropertyDescriptor(
+            PreviewDialog.prototype,
+            "dialogTitle",
+        );
+        const title = desc.get.call({ props: { reportName: "" } });
+        assert.ok(
+            typeof title === "string" && title.length > 0,
+            "got non-empty fallback string: " + title,
+        );
+    });
 
-// hotkeyHintMarkup unit-tests are intentionally omitted on v18+: the getter
-// is `markup(_t("<kbd>P</kbd> Print · …"))`, and Hoot rejects `_t()` calls
-// before the translation service is initialized. The integration is exercised
-// at component mount time during full-stack QA. The getter is a one-line
-// pass-through; isolated unit value is minimal.
+    QUnit.test("hotkeyHintMarkup mentions the three keys", (assert) => {
+        const desc = Object.getOwnPropertyDescriptor(
+            PreviewDialog.prototype,
+            "hotkeyHintMarkup",
+        );
+        const s = String(desc.get.call({}));
+        assert.ok(s.includes("<kbd>P</kbd>"), "mentions <kbd>P</kbd>");
+        assert.ok(s.includes("<kbd>D</kbd>"), "mentions <kbd>D</kbd>");
+        assert.ok(s.includes("<kbd>Esc</kbd>"), "mentions <kbd>Esc</kbd>");
+    });
+});
 
 QUnit.module("no_pdf_preview_print / PreviewDialog - onPrint", {}, function () {
     QUnit.test("focuses and prints the iframe contentWindow", (assert) => {

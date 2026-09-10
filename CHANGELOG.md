@@ -5,6 +5,60 @@ All notable changes to **PDF Preview Before Print** for Odoo 17.0 are documented
 This file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>` scheme.
 
+## [17.0.1.4.0] - 2026-09-10
+
+### Fixed
+- **The error fallback could never run.** An `<iframe>` fires `load` even for a
+  4xx/5xx, so `onIframeError` was unreachable and a failed report showed a raw
+  "500: Internal Server Error" page inside the preview dialog. The dialog now
+  detects the error document and shows the "Unable to load preview" card
+  instead. The test is whether the iframe actually navigated to the report URL
+  and came back as `text/html`, verified on Chrome and Firefox: a healthy report
+  is `application/pdf` in Chrome, while Firefox leaves the document untouched
+  because its own viewer takes over. Anything unreadable is treated as success,
+  so no browser can produce a false error.
+- **Firefox showed the loading spinner forever.** Firefox renders a PDF in its
+  built-in viewer and never fires `load` on the iframe at all, so the spinner
+  that `load` was supposed to clear stayed on top of a perfectly good report.
+  A three-second fallback now clears it.
+- **The area behind the PDF ignored dark mode.** It was a hardcoded `#f5f5f5`
+  that no theme can move - confirmed by reading the compiled dark bundle, where
+  it stayed `#f5f5f5`. Both dialog surfaces now use SCSS variables
+  (`$modal-content-bg`, `$gray-200`), which the dark bundle recompiles with the
+  palette. Light mode is unchanged.
+- **Download silently swallowed failures.** The download promise was neither
+  awaited nor checked, and the dialog closed regardless, so a failed download
+  was indistinguishable from a successful one. The result is now awaited, any
+  message is shown as a sticky notification, and the dialog stays open on
+  failure.
+- **The test wrapper ran the wrong suite.** It loaded
+  `/web/tests?module=no_pdf_preview_print`, but QUnit reads `?module=` as an
+  exact QUnit-module name, which never matched - so the wrapper ran the entire
+  Odoo web suite instead of this module's specs. It now uses `?filter=`.
+
+### Changed
+- **The preview no longer intercepts when the server cannot render PDFs.** On
+  such a server Odoo's own path shows a notification and falls back to the HTML
+  report; neither is reproducible from a report handler. Standing aside gives
+  users working standard behaviour instead of a broken preview.
+
+### Removed
+- 13 lines of SCSS styling a portal modal that exists in no version of this
+  module and had no frontend asset bundle.
+
+### Internal
+- Corrected the `preview.scss` header, which declared OPL-1 inside an LGPL-3
+  module.
+- Browser test suite grown from 33 to 53 specs (71 assertions).
+- OCA pre-commit pipeline, `.gitattributes`, and the root `LICENSE` file added.
+
+## [17.0.1.3.0] - 2026-06-20
+
+### Added
+- **Arabic translation** (`ar`) - 9 languages total, completing the portfolio
+  Tier 2 set. Arabic is right-to-left; the dialog uses Bootstrap logical
+  utilities so it mirrors correctly.
+
 ## [17.0.1.2.0] - 2026-05-12
 
 ### Added
@@ -46,6 +100,6 @@ Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>
 - **Keyboard Shortcuts**: `P` to print, `D` to download, `Esc` to close.
 - **Single + Batch printing**: works from form-view print buttons and from list-view multi-select actions.
 - Handler registered in Odoo 17.0's `ir.actions.report handlers` registry - non-PDF reports (XLSX, CSV, HTML, text) fall through unchanged.
-- Hoot/QUnit JS test suite covering the dialog component, the report handler, and the `getActiveIds` extractor.
+- QUnit JS test suite covering the dialog component, the report handler, and the `getActiveIds` extractor.
 - `HttpCase`-based Python wrapper to run the JS suite via headless Chrome.
 - Zero-configuration installation: no models, no database changes, no per-report opt-in.
