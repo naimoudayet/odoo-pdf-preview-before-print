@@ -111,10 +111,6 @@ Each user sees the dialog in the language set in **Preferences → Language**. R
 - Odoo 19.0 Enterprise
 - Works with all standard and custom QWeb PDF reports
 
-## Development
-
-For the development stack (Docker compose with Postgres + Odoo + headless Chrome for tests), see the [`19.0.dev`](https://github.com/naimoudayet/odoo-pdf-preview-before-print/tree/19.0.dev) branch.
-
 ## Author
 
 **Naim OUDAYET**
