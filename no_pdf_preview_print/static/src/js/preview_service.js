@@ -28,7 +28,6 @@ import { registry } from "@web/core/registry";
 import { download } from "@web/core/network/download";
 import { PreviewDialog } from "./preview_dialog";
 
-
 export function getActiveIds(action) {
     const ctx = action.context || {};
     if (ctx.active_ids && ctx.active_ids.length) {

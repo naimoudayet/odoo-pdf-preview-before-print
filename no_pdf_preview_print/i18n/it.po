@@ -18,6 +18,12 @@ msgstr ""
 
 #. module: no_pdf_preview_print
 #. odoo-javascript
+#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
+msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
+msgstr "<kbd>P</kbd> Stampa · <kbd>D</kbd> Scarica · <kbd>Esc</kbd> Chiudi"
+
+#. module: no_pdf_preview_print
+#. odoo-javascript
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
 msgid "Close"
 msgstr "Chiudi"
@@ -60,14 +66,8 @@ msgid ""
 msgstr ""
 "Anteprima PDF prima della stampa intercetta l'azione di stampa/download e "
 "mostra un'anteprima a schermo intero pulita prima che il documento venga "
-"stampato o scaricato. Scorciatoie da tastiera (P/D/Esc), report singoli e "
-"in batch, nessuna configurazione."
-
-#. module: no_pdf_preview_print
-#. odoo-javascript
-#: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
-msgid "Print"
-msgstr "Stampa"
+"stampato o scaricato. Scorciatoie da tastiera (P/D/Esc), report singoli e in"
+" batch, nessuna configurazione."
 
 #. module: no_pdf_preview_print
 #: model:ir.module.module,summary:no_pdf_preview_print.module_meta_information
@@ -79,12 +79,11 @@ msgstr ""
 #. module: no_pdf_preview_print
 #. odoo-javascript
 #: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
-msgid "Unable to load preview"
-msgstr "Impossibile caricare l'anteprima"
+msgid "Print"
+msgstr "Stampa"
 
 #. module: no_pdf_preview_print
 #. odoo-javascript
-#: code:addons/no_pdf_preview_print/static/src/js/preview_dialog.js:0
-msgid "<kbd>P</kbd> Print · <kbd>D</kbd> Download · <kbd>Esc</kbd> Close"
-msgstr "<kbd>P</kbd> Stampa · <kbd>D</kbd> Scarica · <kbd>Esc</kbd> Chiudi"
-
+#: code:addons/no_pdf_preview_print/static/src/xml/preview_dialog.xml:0
+msgid "Unable to load preview"
+msgstr "Impossibile caricare l'anteprima"
