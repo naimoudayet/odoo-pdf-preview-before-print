@@ -1,5 +1,10 @@
 # PDF Preview Before Print — Odoo 16
 
+![License](https://img.shields.io/badge/license-LGPL--3-blue)
+![Odoo](https://img.shields.io/badge/Odoo-16.0-blueviolet)
+![Languages](https://img.shields.io/badge/languages-9-orange)
+![Version](https://img.shields.io/badge/version-16.0.1.4.0-informational)
+
 Preview any PDF report in a full-screen dialog before printing or downloading. Works with all standard Odoo reports — single records and batch printing. Zero configuration.
 
 ## Features
@@ -27,12 +32,13 @@ The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, t
 | Item                 | Value                                |
 |----------------------|--------------------------------------|
 | Odoo Version         | 16.0                                 |
+| Module Version       | 16.0.1.4.0                           |
 | License              | LGPL-3                               |
 | Dependencies         | `web`                                |
 | Python Dependencies  | None                                 |
 | Type                 | Pure Frontend (OWL)                  |
 | Configuration        | None (zero-config)                   |
-| Languages            | EN, FR, ES, DE, NL, PT-BR, IT, ZH-CN |
+| Languages            | EN, FR, ES, DE, NL, PT-BR, IT, ZH-CN, AR |
 
 ## Installation
 
@@ -43,6 +49,35 @@ The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, t
 ## Configuration
 
 None. Once installed, every QWeb PDF report shows the preview dialog instead of an immediate download.
+
+## Docker Setup (Development)
+
+The dev stack lives on the **`16.0-dev`** branch - `Dockerfile` and
+`docker-compose.yml` are not shipped on the App Store branch, which carries the
+addon only.
+
+```bash
+git checkout 16.0-dev
+docker-compose up -d
+```
+
+- Odoo: http://localhost:2016
+- PostgreSQL: internal `db` service (no exposed port by default)
+
+The provided `Dockerfile` installs Chromium and `python3-websocket` so Odoo's `HttpCase.browser_js` can run the JS test suite headlessly.
+
+## Running Tests
+
+```bash
+docker exec -it pdfprev-odoo-16 \
+  odoo --test-enable --stop-after-init \
+  -d test_db -i no_pdf_preview_print \
+  --test-tags no_pdf_preview_print_js
+```
+
+Runs the QUnit specs under `static/tests/` through the `HttpCase` wrapper in
+`tests/test_js_suite.py`. The Chromium-equipped image it needs is on
+**`16.0-dev`**; the specs and the wrapper ship on every branch.
 
 ## Languages
 
@@ -66,10 +101,6 @@ Each user sees the dialog in the language set in **Preferences → Language**. R
 - Odoo 16.0 Community
 - Odoo 16.0 Enterprise
 - Works with all standard and custom QWeb PDF reports
-
-## Development
-
-For the development stack (Docker compose with Postgres + Odoo + headless Chrome for tests), see the [`16.0.dev`](https://github.com/naimoudayet/odoo-pdf-preview-before-print/tree/16.0.dev) branch.
 
 ## Author
 
