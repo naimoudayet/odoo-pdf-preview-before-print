@@ -41,7 +41,7 @@ Download all still work normally; only the parent wizard's timing differs.
 | Item                 | Value                                |
 |----------------------|--------------------------------------|
 | Odoo Version         | 19.0                                 |
-| Module Version       | 19.0.1.4.0                          |
+| Module Version | 19.0.1.4.0                          |
 | License              | LGPL-3                               |
 | Dependencies         | `web`                                |
 | Python Dependencies  | None                                 |

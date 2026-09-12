@@ -44,6 +44,6 @@
 
   <!-- Bottom-right license / status -->
   <g font-size="16" font-weight="700" letter-spacing="2">
-    <text x="1180" y="560" fill="#FF7F4F" text-anchor="end">LGPL-3 · ZERO CONFIG</text>
+    <text x="1180" y="560" fill="#FF7F4F" text-anchor="end">LGPL-3 &#183; FREE</text>
   </g>
 </svg>
