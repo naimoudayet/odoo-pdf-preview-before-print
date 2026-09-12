@@ -32,7 +32,7 @@ The handler only catches `qweb-pdf` actions. Non-PDF reports (XLSX, CSV, HTML, t
 | Item                 | Value                                |
 |----------------------|--------------------------------------|
 | Odoo Version         | 16.0                                 |
-| Module Version       | 16.0.1.4.0                           |
+| Module Version | 16.0.1.4.0                           |
 | License              | LGPL-3                               |
 | Dependencies         | `web`                                |
 | Python Dependencies  | None                                 |
