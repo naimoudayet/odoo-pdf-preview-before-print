@@ -53,12 +53,12 @@ msgid "PDF Preview"
 msgstr "Anteprima PDF"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,shortdesc:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,shortdesc:base.module_no_pdf_preview_print
 msgid "PDF Preview Before Print"
 msgstr "Anteprima PDF prima della stampa"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,description:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,description:base.module_no_pdf_preview_print
 msgid ""
 "PDF Preview Before Print intercepts the print/download action and shows a "
 "clean full-screen preview before the document is printed or downloaded. "
@@ -70,7 +70,7 @@ msgstr ""
 " batch, nessuna configurazione."
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,summary:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,summary:base.module_no_pdf_preview_print
 msgid "Preview PDF reports in a dialog before printing or downloading"
 msgstr ""
 "Anteprima dei report PDF in una finestra di dialogo prima di stampare o "

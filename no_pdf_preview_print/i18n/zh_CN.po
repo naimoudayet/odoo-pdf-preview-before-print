@@ -53,12 +53,12 @@ msgid "PDF Preview"
 msgstr "PDF预览"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,shortdesc:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,shortdesc:base.module_no_pdf_preview_print
 msgid "PDF Preview Before Print"
 msgstr "打印前PDF预览"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,description:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,description:base.module_no_pdf_preview_print
 msgid ""
 "PDF Preview Before Print intercepts the print/download action and shows a "
 "clean full-screen preview before the document is printed or downloaded. "
@@ -67,7 +67,7 @@ msgstr ""
 "打印前PDF预览会拦截打印/下载操作，在文档实际打印或下载之前显示一个整洁的全屏预览。支持键盘快捷键（P/D/Esc）、单条记录和批量报告，无需任何配置。"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,summary:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,summary:base.module_no_pdf_preview_print
 msgid "Preview PDF reports in a dialog before printing or downloading"
 msgstr "在打印或下载前在对话框中预览PDF报告"
 

@@ -53,12 +53,12 @@ msgid "PDF Preview"
 msgstr "معاينة PDF"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,shortdesc:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,shortdesc:base.module_no_pdf_preview_print
 msgid "PDF Preview Before Print"
 msgstr "معاينة PDF قبل الطباعة"
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,description:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,description:base.module_no_pdf_preview_print
 msgid ""
 "PDF Preview Before Print intercepts the print/download action and shows a "
 "clean full-screen preview before the document is printed or downloaded. "
@@ -69,7 +69,7 @@ msgstr ""
 "للتقارير الفردية والدفعات، دون أي إعدادات إضافية."
 
 #. module: no_pdf_preview_print
-#: model:ir.module.module,summary:no_pdf_preview_print.module_meta_information
+#: model:ir.module.module,summary:base.module_no_pdf_preview_print
 msgid "Preview PDF reports in a dialog before printing or downloading"
 msgstr "معاينة تقارير PDF في مربع حوار قبل الطباعة أو التنزيل"
 
