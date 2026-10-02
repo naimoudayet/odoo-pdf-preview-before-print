@@ -1,4 +1,4 @@
-FROM odoo:19
+FROM odoo:20
 USER root
 
 # Chromium + websocket-client — Odoo's HttpCase.browser_js uses Chrome

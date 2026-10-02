@@ -7,13 +7,15 @@ import {
     markup,
     onMounted,
     onWillUnmount,
-    useRef,
-    useState,
+    proxy,
+    usePlugin,
 } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
+import { HotkeyPlugin } from "@web/core/hotkeys/hotkey_plugin";
 import { _t } from "@web/core/l10n/translation";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
-import { useService } from "@web/core/utils/hooks";
+import { NotificationPlugin } from "@web/core/notifications/notification_plugin";
+import { useRef } from "@web/owl2/utils";
 
 export class PreviewDialog extends Component {
     static template = "no_pdf_preview_print.PreviewDialog";
@@ -27,9 +29,9 @@ export class PreviewDialog extends Component {
 
     setup() {
         this.iframeRef = useRef("previewIframe");
-        this.state = useState({ loading: true, error: false, downloading: false });
-        this.hotkey = useService("hotkey");
-        this.notification = useService("notification");
+        this.state = proxy({ loading: true, error: false, downloading: false });
+        this.hotkey = usePlugin(HotkeyPlugin);
+        this.notification = usePlugin(NotificationPlugin);
 
         // Hotkeys via Odoo's service rather than a raw document listener: it
         // handles input-field bypass, dialog stacking (only the top dialog's

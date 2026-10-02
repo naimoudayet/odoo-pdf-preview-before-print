@@ -1,9 +1,9 @@
-# PDF Preview Before Print — Odoo 19
+# PDF Preview Before Print — Odoo 20
 
 ![License](https://img.shields.io/badge/license-LGPL--3-blue)
-![Odoo](https://img.shields.io/badge/Odoo-19.0-blueviolet)
+![Odoo](https://img.shields.io/badge/Odoo-20.0-blueviolet)
 ![Languages](https://img.shields.io/badge/languages-9-orange)
-![Version](https://img.shields.io/badge/version-19.0.1.4.0-informational)
+![Version](https://img.shields.io/badge/version-20.0.1.4.0-informational)
 
 Preview any PDF report in a full-screen dialog before printing or downloading. Works with all standard Odoo reports — single records and batch printing. Zero configuration.
 
@@ -21,7 +21,7 @@ Preview any PDF report in a full-screen dialog before printing or downloading. W
 ## How It Works
 
 1. The user clicks **Print** on any record (or batch via list multi-select).
-2. The module's handler (registered in Odoo 19's `ir.actions.report handlers` registry) intercepts the action.
+2. The module's handler (registered in Odoo 20's `ir.actions.report handlers` registry) intercepts the action.
 3. A `PreviewDialog` OWL component renders the PDF inside an iframe.
 4. The user chooses **Print**, **Download**, or **Close** — with full keyboard support.
 
@@ -40,8 +40,8 @@ Download all still work normally; only the parent wizard's timing differs.
 
 | Item                 | Value                                |
 |----------------------|--------------------------------------|
-| Odoo Version         | 19.0                                 |
-| Module Version | 19.0.1.4.0                          |
+| Odoo Version         | 20.0                                 |
+| Module Version | 20.0.1.4.0                          |
 | License              | LGPL-3                               |
 | Dependencies         | `web`                                |
 | Python Dependencies  | None                                 |
@@ -61,16 +61,16 @@ None. Once installed, every QWeb PDF report shows the preview dialog instead of 
 
 ## Docker Setup (Development)
 
-The dev stack lives on the **`19.0-dev`** branch - `Dockerfile` and
+The dev stack lives on the **`20.0-dev`** branch - `Dockerfile` and
 `docker-compose.yml` are not shipped on the App Store branch, which carries the
 addon only.
 
 ```bash
-git checkout 19.0-dev
+git checkout 20.0-dev
 docker-compose up -d
 ```
 
-- Odoo: http://localhost:2019
+- Odoo: http://localhost:2020
 - PostgreSQL: internal `db` service (no exposed port by default)
 
 The provided `Dockerfile` installs Chromium and `python3-websocket` so Odoo's `HttpCase.browser_js` can run the JS test suite headlessly.
@@ -78,7 +78,7 @@ The provided `Dockerfile` installs Chromium and `python3-websocket` so Odoo's `H
 ## Running Tests
 
 ```bash
-docker exec -it pdfprev-odoo-19 \
+docker exec -it pdfprev-odoo-20 \
   odoo --test-enable --stop-after-init \
   -d test_db -i no_pdf_preview_print \
   --test-tags no_pdf_preview_print_js
@@ -86,7 +86,7 @@ docker exec -it pdfprev-odoo-19 \
 
 Runs the Hoot specs under `static/tests/` through the `HttpCase` wrapper in
 `tests/test_js_suite.py`. Both the wrapper and the Chromium-equipped image it
-needs are on **`19.0-dev`**; the specs themselves ship on every branch.
+needs are on **`20.0-dev`**; the specs themselves ship on every branch.
 
 ## Languages
 
@@ -107,8 +107,8 @@ Each user sees the dialog in the language set in **Preferences → Language**. R
 
 ## Compatibility
 
-- Odoo 19.0 Community
-- Odoo 19.0 Enterprise
+- Odoo 20.0 Community
+- Odoo 20.0 Enterprise
 - Works with all standard and custom QWeb PDF reports
 
 ## Author

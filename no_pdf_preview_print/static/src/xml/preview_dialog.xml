@@ -3,51 +3,51 @@
 <templates xml:space="preserve">
 
     <t t-name="no_pdf_preview_print.PreviewDialog">
-        <Dialog title="dialogTitle" size="'xl'" close="props.close">
+        <Dialog title="this.dialogTitle" size="'xl'" close="this.props.close">
             <div class="o_pdf_preview_container d-flex flex-column position-relative"
                  style="height: 80vh;">
 
                 <!-- Loading spinner -->
-                <div t-if="state.loading"
+                <div t-if="this.state.loading"
                      class="o_pdf_preview_loading d-flex align-items-center justify-content-center position-absolute w-100 h-100"
                      style="z-index: 1;">
                     <div class="text-center text-muted">
-                        <i class="fa fa-spinner fa-spin fa-2x mb-2 d-block"/>
+                        <i class="oi oi-spin oi-2x mb-2 d-block" data-icon="progress_activity"/>
                         <span>Loading preview…</span>
                     </div>
                 </div>
 
                 <!-- Error fallback -->
-                <div t-if="state.error"
+                <div t-if="this.state.error"
                      class="d-flex align-items-center justify-content-center flex-grow-1">
                     <div class="text-center text-muted">
-                        <i class="fa fa-exclamation-triangle fa-2x mb-2 d-block text-warning"/>
+                        <i class="oi oi-2x mb-2 d-block text-warning" data-icon="warning"/>
                         <p>Unable to load preview</p>
-                        <button class="btn btn-primary btn-sm" t-on-click="onDownload" t-att-disabled="state.downloading">
-                            <i class="fa fa-download me-1"/>Download instead
+                        <button class="btn btn-primary btn-sm" t-on-click="this.onDownload" t-att-disabled="this.state.downloading">
+                            <i class="oi me-1" data-icon="download"/>Download instead
                         </button>
                     </div>
                 </div>
 
                 <!-- PDF iframe -->
-                <iframe t-ref="previewIframe"
-                        t-att-src="props.reportUrl"
-                        t-att-class="'o_pdf_preview_iframe flex-grow-1 border-0 w-100' + (state.error ? ' d-none' : '')"
-                        t-on-load="onIframeLoad"
-                        t-on-error="onIframeError"/>
+                <iframe t-custom-ref="previewIframe"
+                        t-att-src="this.props.reportUrl"
+                        t-att-class="'o_pdf_preview_iframe flex-grow-1 border-0 w-100' + (this.state.error ? ' d-none' : '')"
+                        t-on-load="this.onIframeLoad"
+                        t-on-error="this.onIframeError"/>
             </div>
 
             <t t-set-slot="footer">
                 <div class="d-flex w-100 justify-content-between align-items-center">
-                    <span class="text-muted small d-none d-md-inline" t-out="hotkeyHintMarkup"/>
+                    <span class="text-muted small d-none d-md-inline" t-out="this.hotkeyHintMarkup"/>
                     <div class="d-flex gap-2 ms-auto">
-                        <button class="btn btn-primary" t-on-click="onPrint">
-                            <i class="fa fa-print me-1"/>Print
+                        <button class="btn btn-primary" t-on-click="this.onPrint">
+                            <i class="oi me-1" data-icon="print"/>Print
                         </button>
-                        <button class="btn btn-secondary" t-on-click="onDownload" t-att-disabled="state.downloading">
-                            <i class="fa fa-download me-1"/>Download
+                        <button class="btn btn-secondary" t-on-click="this.onDownload" t-att-disabled="this.state.downloading">
+                            <i class="oi me-1" data-icon="download"/>Download
                         </button>
-                        <button class="btn btn-light" t-on-click="props.close">
+                        <button class="btn btn-light" t-on-click="this.props.close">
                             Close
                         </button>
                     </div>

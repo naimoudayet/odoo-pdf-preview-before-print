@@ -1,6 +1,6 @@
 # Manual Test Scenarios -- PDF Preview Before Print
 
-Dev stack: `docker-compose up -d`, then open <http://localhost:2019> and use database `pdfprev19`.
+Dev stack: `docker-compose up -d`, then open <http://localhost:2020> and use database `pdfprev19`.
 Install `sale_management`, `contacts`, `account` and `project` with demo data so there are
 real records to print.
 
