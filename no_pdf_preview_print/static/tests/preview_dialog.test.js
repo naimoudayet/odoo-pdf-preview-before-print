@@ -1,7 +1,7 @@
 // Copyright 2026 Naim OUDAYET
 // License LGPL-3
 import { describe, expect, test } from "@odoo/hoot";
-import { mountWithCleanup } from "@web/../tests/web_test_helpers";
+import { assignDialogTestEnv, mountWithCleanup } from "@web/../tests/web_test_helpers";
 import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
 describe("no_pdf_preview_print / PreviewDialog - dialogTitle", () => {
@@ -355,6 +355,7 @@ describe("no_pdf_preview_print / PreviewDialog - mounted", () => {
     // useRef from a module that does not export it and declared a static
     // props schema Owl 3 rejects, so the preview never opened.
     test("renders the report frame, its title and the footer buttons", async () => {
+        assignDialogTestEnv(); // the dialog service gives a dialog its env.dialogData
         await mountWithCleanup(PreviewDialog, {
             props: {
                 reportUrl: "about:blank",
@@ -364,7 +365,7 @@ describe("no_pdf_preview_print / PreviewDialog - mounted", () => {
             },
         });
         expect(".o_pdf_preview_iframe").toHaveCount(1);
-        expect(".modal-title").toHaveText("Invoice 0001");
-        expect(".modal-footer button.btn-primary").toHaveText("Print");
+        expect(".o_dialog header .modal-title").toHaveText("Invoice 0001");
+        expect(".o_dialog footer button.btn-primary").toHaveText("Print");
     });
 });
