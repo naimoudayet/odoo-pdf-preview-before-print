@@ -29,31 +29,28 @@ describe("no_pdf_preview_print / PreviewDialog - onPrint", () => {
     test("focuses and prints the iframe contentWindow", () => {
         let focused = 0,
             printed = 0;
-        const mock = {
-            iframeRef: {
-                el: {
-                    contentWindow: {
-                        focus() {
-                            focused++;
-                        },
-                        print() {
-                            printed++;
-                        },
-                    },
+        const frame = {
+            contentWindow: {
+                focus() {
+                    focused++;
+                },
+                print() {
+                    printed++;
                 },
             },
         };
+        const mock = { iframeRef: () => frame };
         PreviewDialog.prototype.onPrint.call(mock);
         expect(focused).toBe(1);
         expect(printed).toBe(1);
     });
     test("no-op when iframe element is null", () => {
-        PreviewDialog.prototype.onPrint.call({ iframeRef: { el: null } });
+        PreviewDialog.prototype.onPrint.call({ iframeRef: () => null });
         expect(true).toBe(true);
     });
     test("no-op when contentWindow is missing", () => {
         PreviewDialog.prototype.onPrint.call({
-            iframeRef: { el: { contentWindow: null } },
+            iframeRef: () => ({ contentWindow: null }),
         });
         expect(true).toBe(true);
     });
@@ -87,7 +84,7 @@ describe("no_pdf_preview_print / PreviewDialog - iframe lifecycle", () => {
     function makeDialog(el) {
         const d = Object.create(PreviewDialog.prototype);
         d.state = { loading: true, error: false, downloading: false };
-        d.iframeRef = { el };
+        d.iframeRef = () => el;
         d.hotkey = { registerIframe() {} };
         return d;
     }
@@ -150,7 +147,9 @@ describe("no_pdf_preview_print / PreviewDialog - error detection", () => {
         const d = Object.create(PreviewDialog.prototype);
         d.state = { loading: true, error: false, downloading: false };
         d.hotkey = { registerIframe() {} };
-        d.iframeRef = { el: { contentDocument: doc, contentWindow: {} } };
+        const frame = { contentDocument: doc, contentWindow: {} };
+        // Owl 3: the ref is a signal, read as a call
+        d.iframeRef = () => frame;
         return d;
     }
     const chromePdf = () =>
@@ -208,14 +207,13 @@ describe("no_pdf_preview_print / PreviewDialog - error detection", () => {
         const d = Object.create(PreviewDialog.prototype);
         d.state = { loading: true, error: false, downloading: false };
         d.hotkey = { registerIframe() {} };
-        d.iframeRef = {
-            el: {
-                get contentDocument() {
-                    throw new Error("cross-origin");
-                },
-                contentWindow: {},
+        const frame = {
+            get contentDocument() {
+                throw new Error("cross-origin");
             },
+            contentWindow: {},
         };
+        d.iframeRef = () => frame;
         d.onIframeLoad();
         expect(d.state.error).toBe(false);
     });
@@ -228,7 +226,9 @@ describe("no_pdf_preview_print / PreviewDialog - settle fallback", () => {
         const d = Object.create(PreviewDialog.prototype);
         d.state = { loading, error: false, downloading: false };
         d.hotkey = { registerIframe() {} };
-        d.iframeRef = { el: { contentDocument: doc, contentWindow: {} } };
+        const frame = { contentDocument: doc, contentWindow: {} };
+        // Owl 3: the ref is a signal, read as a call
+        d.iframeRef = () => frame;
         return d;
     }
 
@@ -276,7 +276,7 @@ describe("no_pdf_preview_print / PreviewDialog - settle fallback", () => {
         });
         d.onSettleTimeout();
         expect(d.state.error).toBe(false);
-        d.iframeRef.el.contentDocument = {
+        d.iframeRef().contentDocument = {
             contentType: "text/html",
             location: { href: "http://x/report/pdf/slow.report/1" },
         };

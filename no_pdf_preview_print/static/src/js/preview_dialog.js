@@ -8,27 +8,32 @@ import {
     onMounted,
     onWillUnmount,
     proxy,
+    signal,
+    t,
     usePlugin,
+    useProps,
 } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { HotkeyPlugin } from "@web/core/hotkeys/hotkey_plugin";
 import { _t } from "@web/core/l10n/translation";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { NotificationPlugin } from "@web/core/notifications/notification_plugin";
-import { useRef } from "@web/owl2/utils";
 
 export class PreviewDialog extends Component {
     static template = "no_pdf_preview_print.PreviewDialog";
     static components = { Dialog };
-    static props = {
-        reportUrl: { type: String },
-        reportName: { type: String, optional: true },
-        onDownload: { type: Function },
-        close: { type: Function },
-    };
+    // Owl 3: a props schema through useProps (a static one is rejected at mount)
+    props = useProps({
+        reportUrl: t.string(),
+        reportName: t.string().optional(),
+        onDownload: t.function(),
+        close: t.function(),
+    });
+
+    // Owl 3: a ref is a signal bound with t-ref="this.iframeRef"; read it as this.iframeRef()
+    iframeRef = signal.ref();
 
     setup() {
-        this.iframeRef = useRef("previewIframe");
         this.state = proxy({ loading: true, error: false, downloading: false });
         this.hotkey = usePlugin(HotkeyPlugin);
         this.notification = usePlugin(NotificationPlugin);
@@ -119,7 +124,7 @@ export class PreviewDialog extends Component {
      */
     isErrorDocument() {
         try {
-            const doc = this.iframeRef.el?.contentDocument;
+            const doc = this.iframeRef()?.contentDocument;
             const href = doc?.location?.href;
             // Firefox leaves contentDocument on the initial about:blank when
             // its own viewer takes the PDF. An untouched document is not
@@ -144,7 +149,7 @@ export class PreviewDialog extends Component {
      * case where contentWindow isn't reachable (cross-origin or PDF sandbox).
      */
     registerIframeHotkeys() {
-        const iframe = this.iframeRef.el;
+        const iframe = this.iframeRef();
         if (iframe?.contentWindow) {
             try {
                 this.hotkey.registerIframe(iframe);
@@ -161,7 +166,7 @@ export class PreviewDialog extends Component {
     }
 
     onPrint() {
-        const iframe = this.iframeRef.el;
+        const iframe = this.iframeRef();
         if (iframe?.contentWindow) {
             iframe.contentWindow.focus();
             iframe.contentWindow.print();

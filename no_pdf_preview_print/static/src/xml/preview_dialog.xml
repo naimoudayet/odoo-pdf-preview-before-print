@@ -30,7 +30,7 @@
                 </div>
 
                 <!-- PDF iframe -->
-                <iframe t-custom-ref="previewIframe"
+                <iframe t-ref="this.iframeRef"
                         t-att-src="this.props.reportUrl"
                         t-att-class="'o_pdf_preview_iframe flex-grow-1 border-0 w-100' + (this.state.error ? ' d-none' : '')"
                         t-on-load="this.onIframeLoad"
