@@ -1,7 +1,7 @@
 # PDF Preview Before Print
 
 ![License](https://img.shields.io/badge/license-LGPL--3-blue)
-![Odoo](https://img.shields.io/badge/Odoo-16.0%20%7C%2017.0%20%7C%2018.0%20%7C%2019.0-blueviolet)
+![Odoo](https://img.shields.io/badge/Odoo-16.0%20%7C%2017.0%20%7C%2018.0%20%7C%2019.0%20%7C%2020.0-blueviolet)
 ![Languages](https://img.shields.io/badge/languages-9-orange)
 
 **Author: Naim OUDAYET**
