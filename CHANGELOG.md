@@ -5,6 +5,15 @@ All notable changes to **PDF Preview Before Print** for Odoo 20.0 are documented
 This file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>` scheme.
 
+## [20.0.1.4.0] - 2026-10-02
+
+### Changed
+- Ported to Odoo 20 (official `odoo:20` image, OWL 3; the Hoot suite passes in Chrome). The dialog's icons use Odoo 20's icon set.
+
+### Fixed
+- On Odoo 20 the preview dialog did not open. Odoo's own migration script imported `useRef` from a module that does not provide it, and OWL 3 rejects a static props schema. The dialog now declares its props with `useProps` and keeps the report frame as an OWL 3 ref.
+- A new Hoot test mounts the real dialog: report frame, title and Print button. The existing tests called its methods on stand-in objects and stayed green while the dialog could not open.
+
 ## [19.0.1.4.0] - 2026-09-09
 
 ### Fixed
