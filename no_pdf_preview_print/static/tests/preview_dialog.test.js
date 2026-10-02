@@ -1,6 +1,7 @@
 // Copyright 2026 Naim OUDAYET
 // License LGPL-3
 import { describe, expect, test } from "@odoo/hoot";
+import { mountWithCleanup } from "@web/../tests/web_test_helpers";
 import { PreviewDialog } from "@no_pdf_preview_print/js/preview_dialog";
 
 describe("no_pdf_preview_print / PreviewDialog - dialogTitle", () => {
@@ -345,5 +346,25 @@ describe("no_pdf_preview_print / PreviewDialog - download result", () => {
         await d.onDownload();
         await first;
         expect(calls).toBe(1);
+    });
+});
+
+describe("no_pdf_preview_print / PreviewDialog - mounted", () => {
+    // The unit tests above call the methods on hand-made objects; this one
+    // mounts the real component. On Odoo 20 the ported dialog imported
+    // useRef from a module that does not export it and declared a static
+    // props schema Owl 3 rejects, so the preview never opened.
+    test("renders the report frame, its title and the footer buttons", async () => {
+        await mountWithCleanup(PreviewDialog, {
+            props: {
+                reportUrl: "about:blank",
+                reportName: "Invoice 0001",
+                onDownload: async () => true,
+                close: () => {},
+            },
+        });
+        expect(".o_pdf_preview_iframe").toHaveCount(1);
+        expect(".modal-title").toHaveText("Invoice 0001");
+        expect(".modal-footer button.btn-primary").toHaveText("Print");
     });
 });
