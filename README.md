@@ -3,7 +3,7 @@
 ![License](https://img.shields.io/badge/license-LGPL--3-blue)
 ![Odoo](https://img.shields.io/badge/Odoo-19.0-blueviolet)
 ![Languages](https://img.shields.io/badge/languages-9-orange)
-![Version](https://img.shields.io/badge/version-19.0.1.4.0-informational)
+![Version](https://img.shields.io/badge/version-19.0.1.4.1-informational)
 
 Preview any PDF report in a full-screen dialog before printing or downloading. Works with all standard Odoo reports — single records and batch printing. Zero configuration.
 
@@ -41,7 +41,7 @@ Download all still work normally; only the parent wizard's timing differs.
 | Item                 | Value                                |
 |----------------------|--------------------------------------|
 | Odoo Version         | 19.0                                 |
-| Module Version | 19.0.1.4.0                          |
+| Module Version | 19.0.1.4.1                          |
 | License              | LGPL-3                               |
 | Dependencies         | `web`                                |
 | Python Dependencies  | None                                 |
