@@ -6,7 +6,7 @@
          the template is not registered as an OWL template and the component
          fails to mount with Missing template. -->
     <t t-name="no_pdf_preview_print.PreviewDialog" owl="1">
-        <Dialog title="dialogTitle" size="'xl'" close="props.close">
+        <Dialog title="dialogTitle" size="'xl'">
             <div class="o_pdf_preview_container d-flex flex-column position-relative"
                  style="height: 80vh;">
 
