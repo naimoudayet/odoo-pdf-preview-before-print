@@ -375,6 +375,10 @@
                 <strong style="color: #714B67;">Does it conflict with PDF Password Protection?</strong>
                 <p style="color: #475569; font-size: 14px; margin: 8px 0 0;">No. PDF Password Protection encrypts the rendered PDF server-side; this module only affects the client-side download UX. Stack them freely.</p>
             </div>
+            <div style="border-bottom: 1px solid #E8DDE5; padding: 16px 0;">
+                <strong style="color: #714B67;">Can I send the previewed PDF to a client as a link?</strong>
+                <p style="color: #475569; font-size: 14px; margin: 8px 0 0;">Not with this module, which previews, prints and downloads. The separate <strong>PDF Preview Share Link</strong> add-on puts a Share link button in this same preview: a protected link with an optional password and expiry date, which you can revoke at any time. Search for it on the App Store.</p>
+            </div>
             <div style="padding: 16px 0;">
                 <strong style="color: #714B67;">Will this break with future Odoo updates?</strong>
                 <p style="color: #475569; font-size: 14px; margin: 8px 0 0;">It hooks the public <em>"ir.actions.report handlers"</em> registry. As long as that registry exists in the same form, the module will keep working. Each version branch ships its own JS test suite to catch regressions.</p>
