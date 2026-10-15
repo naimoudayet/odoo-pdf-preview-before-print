@@ -5,6 +5,15 @@ All notable changes to **PDF Preview Before Print** for Odoo 17.0 are documented
 This file follows the [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) format.
 Versions use Odoo's `<odoo_version>.<module_major>.<module_minor>.<module_patch>` scheme.
 
+## [17.0.1.4.1] - 2026-10-15
+
+### Fixed
+- **The preview did not open in developer mode with debug assets.** The dialog passed a
+  `close` prop that Odoo's `Dialog` does not declare; Odoo checks props only when assets are
+  in debug mode (and in tests), so the preview failed there with "Invalid props for
+  component 'Dialog': unknown key 'close'" and worked everywhere else. The prop is gone;
+  the dialog closes through its own environment, as every core dialog does.
+
 ## [17.0.1.4.0] - 2026-09-10
 
 ### Fixed
